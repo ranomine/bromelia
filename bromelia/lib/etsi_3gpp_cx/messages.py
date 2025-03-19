@@ -139,3 +139,127 @@ class UserAuthorizationRequest(DiameterRequest):
                                  application_id=DIAMETER_APPLICATION_Cx)
 
         DiameterRequest._load(self, locals())
+
+
+class ServerAssignmentAnswer(DiameterAnswer):
+    """Implementation of Server-Assignment-Answer (SAA) command as per 
+    clause 6.1.4 of ETSI TS 129 229 V16.3.0 (2024-10).
+
+    The Server-Assignment-Answer is indicated by the Command Code field
+    set to 301 and Command Flag's 'R' bit cleared.
+
+    Usage::
+
+        >>> from bromelia.lib.etsi_3gpp_cx import SAA
+        >>> saa = SAA()
+        >>> saa
+        <Diameter Message: 301 [SAA] PXY, 16777216 [3GPP Cx], 5 AVP(s)>
+    """
+
+    mandatory = {
+                    "session_id": SessionIdAVP,
+                    "auth_session_state": AuthSessionStateAVP,
+                    "origin_host": OriginHostAVP,
+                    "origin_realm": OriginRealmAVP,
+    }
+
+    optionals = { 
+                    "vendor_specific_application_id": VendorSpecificApplicationIdAVP,
+                    "result_code": ResultCodeAVP,
+                    "experimental_result": ExperimentalResultAVP,
+                    "server_name": ServerNameAVP,
+                    "server_capabilities": ServerCapabilitiesAVP,
+                    "supported_features": SupportedFeaturesAVP,
+                    "failed_avp": FailedAvpAVP,
+                    "proxy_info": ProxyInfoAVP,
+                    "route_record": RouteRecordAVP,
+    }
+
+    def __init__(self,
+                 session_id=platform.node(),
+                 vendor_specific_application_id=[VendorIdAVP(VENDOR_ID_3GPP), AuthApplicationIdAVP(DIAMETER_APPLICATION_Cx)],
+                 result_code=None,
+                 experimental_result=None,
+                 auth_session_state=NO_STATE_MAINTAINED,
+                 origin_host=platform.node(), 
+                 origin_realm=socket.getfqdn(), 
+                 server_name=None,
+                 server_capabilities=None,
+                 supported_features=None,
+                 failed_avp=None,
+                 proxy_info=None,
+                 route_record=None,
+                 **kwargs):
+
+        DiameterAnswer.__init__(self, 
+                                command_code=SERVER_ASSIGNMENT_MESSAGE, 
+                                application_id=DIAMETER_APPLICATION_Cx)
+
+        DiameterAnswer._load(self, locals())
+
+
+class ServerAssignmentRequest(DiameterRequest):
+    """Implementation of Server-Assignment-Request (SAR) command as per 
+    clause 6.1.3 of ETSI TS 129 229 V16.3.0 (2024-10).
+
+    The Server-Assignment-Request is indicated by the Command Code field
+    set to 301 and the 'R' bit set in the Command Flags field.
+
+    Usage::
+
+        >>> from bromelia.lib.etsi_3gpp_cx import SAR
+        >>> sar_avps = {
+        ...     "destination_realm": "example.com",
+        ...     "user_name": "frodo",
+        ...     "server_name": "server.example.com",
+        ...     "server_assignment_type": SERVER_ASSIGNMENT_TYPE_REGISTRATION
+        ... }
+        >>> sar = SAR(**sar_avps)
+        >>> sar
+        <Diameter Message: 301 [SAR] REQ|PXY, 16777216 [3GPP Cx], 9 AVP(s)>
+    """    
+
+    mandatory = {
+                    "session_id": SessionIdAVP,
+                    "auth_session_state": AuthSessionStateAVP,
+                    "origin_host": OriginHostAVP,
+                    "origin_realm": OriginRealmAVP,
+                    "destination_realm": DestinationRealmAVP,
+                    "user_name": UserNameAVP,
+                    "server_name": ServerNameAVP,
+                    "server_assignment_type": ServerAssignmentTypeAVP,
+    }
+
+    optionals = {
+                    "vendor_specific_application_id": VendorSpecificApplicationIdAVP,
+                    "destination_host": DestinationHostAVP,
+                    "supported_features": SupportedFeaturesAVP,
+                    "server_capabilities": ServerCapabilitiesAVP,
+                    "user_data": UserDataAVP,
+                    "proxy_info": ProxyInfoAVP,
+                    "route_record": RouteRecordAVP,
+    }
+
+    def __init__(self, 
+                 session_id=platform.node(), 
+                 vendor_specific_application_id=[VendorIdAVP(VENDOR_ID_3GPP), AuthApplicationIdAVP(DIAMETER_APPLICATION_Cx)],
+                 auth_session_state=NO_STATE_MAINTAINED,
+                 origin_host=platform.node(), 
+                 origin_realm=socket.getfqdn(), 
+                 destination_host=None,
+                 destination_realm=None,
+                 user_name=None,
+                 server_name=None,
+                 server_assignment_type=None,
+                 supported_features=None,
+                 server_capabilities=None,
+                 user_data=None,
+                 proxy_info=None,
+                 route_record=None,
+                 **kwargs):
+
+        DiameterRequest.__init__(self, 
+                                 command_code=SERVER_ASSIGNMENT_MESSAGE, 
+                                 application_id=DIAMETER_APPLICATION_Cx)
+
+        DiameterRequest._load(self, locals())
