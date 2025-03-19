@@ -9,11 +9,22 @@
     :license: MIT, see LICENSE for more details.
 """
 
+from ..._internal_utils import convert_to_3_bytes
 from ..._internal_utils import convert_to_4_bytes
 
+#: Diameter Messages
+USER_AUTHORIZATION_MESSAGE = convert_to_3_bytes(300)
+SERVER_ASSIGNMENT_MESSAGE = convert_to_3_bytes(301)
+LOCATION_INFO_MESSAGE = convert_to_3_bytes(302)
+MULTIMEDIA_AUTH_MESSAGE = convert_to_3_bytes(302)
+REGISTRATION_TERMINATION_MESSAGE = convert_to_3_bytes(304)
+PUSH_PROFILE_MESSAGE = convert_to_3_bytes(305)
 
 #: Diameter AVPs
 VISITED_NETWORK_IDENTIFIER_AVP_CODE = convert_to_4_bytes(600)
+PUBLIC_IDENTITY_AVP_CODE = convert_to_4_bytes(601)
+SERVER_NAME_AVP_CODE = convert_to_4_bytes(602)
+SERVER_CAPABILITIES_AVP_CODE = convert_to_4_bytes(603)
 SIP_NUMBER_AUTH_ITEMS_AVP_CODE = convert_to_4_bytes(607)
 SIP_AUTHENTICATION_SCHEME_AVP_CODE = convert_to_4_bytes(608)
 SIP_AUTHENTICATE_AVP_CODE = convert_to_4_bytes(609)
