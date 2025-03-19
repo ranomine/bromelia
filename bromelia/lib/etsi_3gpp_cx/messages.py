@@ -261,3 +261,119 @@ class ServerAssignmentRequest(DiameterRequest):
                                  application_id=DIAMETER_APPLICATION_Cx)
 
         DiameterRequest._load(self, locals())
+
+
+class LocationInfoAnswer(DiameterAnswer):
+    """Implementation of Location-Info-Answer (LIA) command as per 
+    clause 6.1.6 of ETSI TS 129 229 V16.3.0 (2024-10).
+
+    The Location-Info-Answer is indicated by the Command Code field
+    set to 302 and Command Flag's 'R' bit cleared.
+
+    Usage::
+
+        >>> from bromelia.lib.etsi_3gpp_cx import LIA
+        >>> lia = LIA()
+        >>> lia
+        <Diameter Message: 302 [LIA] PXY, 16777216 [3GPP Cx], 5 AVP(s)>
+    """
+
+    mandatory = {
+                    "session_id": SessionIdAVP,
+                    "auth_session_state": AuthSessionStateAVP,
+                    "origin_host": OriginHostAVP,
+                    "origin_realm": OriginRealmAVP,
+    }
+
+    optionals = { 
+                    "vendor_specific_application_id": VendorSpecificApplicationIdAVP,
+                    "result_code": ResultCodeAVP,
+                    "experimental_result": ExperimentalResultAVP,
+                    "server_name": ServerNameAVP,
+                    "server_capabilities": ServerCapabilitiesAVP,
+                    "supported_features": SupportedFeaturesAVP,
+                    "failed_avp": FailedAvpAVP,
+                    "proxy_info": ProxyInfoAVP,
+                    "route_record": RouteRecordAVP,
+    }
+
+    def __init__(self,
+                 session_id=platform.node(),
+                 vendor_specific_application_id=[VendorIdAVP(VENDOR_ID_3GPP), AuthApplicationIdAVP(DIAMETER_APPLICATION_Cx)],
+                 result_code=None,
+                 experimental_result=None,
+                 auth_session_state=NO_STATE_MAINTAINED,
+                 origin_host=platform.node(), 
+                 origin_realm=socket.getfqdn(), 
+                 server_name=None,
+                 server_capabilities=None,
+                 supported_features=None,
+                 failed_avp=None,
+                 proxy_info=None,
+                 route_record=None,
+                 **kwargs):
+
+        DiameterAnswer.__init__(self, 
+                                command_code=LOCATION_INFO_MESSAGE, 
+                                application_id=DIAMETER_APPLICATION_Cx)
+
+        DiameterAnswer._load(self, locals())
+
+
+class LocationInfoRequest(DiameterRequest):
+    """Implementation of Location-Info-Request (LIR) command as per 
+    clause 6.1.5 of ETSI TS 129 229 V16.3.0 (2024-10).
+
+    The Location-Info-Request is indicated by the Command Code field
+    set to 302 and the 'R' bit set in the Command Flags field.
+
+    Usage::
+
+        >>> from bromelia.lib.etsi_3gpp_cx import LIR
+        >>> lir_avps = {
+        ...     "destination_realm": "example.com",
+        ...     "public_identity": "sip:frodo@example.com"
+        ... }
+        >>> lir = LIR(**lir_avps)
+        >>> lir
+        <Diameter Message: 302 [LIR] REQ|PXY, 16777216 [3GPP Cx], 7 AVP(s)>
+    """    
+
+    mandatory = {
+                    "session_id": SessionIdAVP,
+                    "auth_session_state": AuthSessionStateAVP,
+                    "origin_host": OriginHostAVP,
+                    "origin_realm": OriginRealmAVP,
+                    "destination_realm": DestinationRealmAVP,
+                    "public_identity": PublicIdentityAVP,
+    }
+
+    optionals = {
+                    "vendor_specific_application_id": VendorSpecificApplicationIdAVP,
+                    "destination_host": DestinationHostAVP,
+                    "supported_features": SupportedFeaturesAVP,
+                    "server_capabilities": ServerCapabilitiesAVP,
+                    "proxy_info": ProxyInfoAVP,
+                    "route_record": RouteRecordAVP,
+    }
+
+    def __init__(self, 
+                 session_id=platform.node(), 
+                 vendor_specific_application_id=[VendorIdAVP(VENDOR_ID_3GPP), AuthApplicationIdAVP(DIAMETER_APPLICATION_Cx)],
+                 auth_session_state=NO_STATE_MAINTAINED,
+                 origin_host=platform.node(), 
+                 origin_realm=socket.getfqdn(), 
+                 destination_host=None,
+                 destination_realm=None,
+                 public_identity=None,
+                 supported_features=None,
+                 server_capabilities=None,
+                 proxy_info=None,
+                 route_record=None,
+                 **kwargs):
+
+        DiameterRequest.__init__(self, 
+                                 command_code=LOCATION_INFO_MESSAGE, 
+                                 application_id=DIAMETER_APPLICATION_Cx)
+
+        DiameterRequest._load(self, locals())
