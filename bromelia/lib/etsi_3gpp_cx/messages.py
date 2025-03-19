@@ -235,7 +235,6 @@ class ServerAssignmentRequest(DiameterRequest):
                     "destination_host": DestinationHostAVP,
                     "supported_features": SupportedFeaturesAVP,
                     "server_capabilities": ServerCapabilitiesAVP,
-                    "user_data": UserDataAVP,
                     "proxy_info": ProxyInfoAVP,
                     "route_record": RouteRecordAVP,
     }
@@ -253,7 +252,6 @@ class ServerAssignmentRequest(DiameterRequest):
                  server_assignment_type=None,
                  supported_features=None,
                  server_capabilities=None,
-                 user_data=None,
                  proxy_info=None,
                  route_record=None,
                  **kwargs):
