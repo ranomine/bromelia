@@ -42,13 +42,12 @@ class UserAuthorizationAnswer(DiameterAnswer):
     }
 
     optionals = { 
-                    # "drmp": DrmpAVP,
                     "vendor_specific_application_id": VendorSpecificApplicationIdAVP,
                     "result_code": ResultCodeAVP,
                     "experimental_result": ExperimentalResultAVP,
-                    "supported_features": SupportedFeaturesAVP,
                     "server_name": ServerNameAVP,
                     "server_capabilities": ServerCapabilitiesAVP,
+                    "supported_features": SupportedFeaturesAVP,
                     "failed_avp": FailedAvpAVP,
                     "proxy_info": ProxyInfoAVP,
                     "route_record": RouteRecordAVP,
@@ -56,27 +55,23 @@ class UserAuthorizationAnswer(DiameterAnswer):
 
     def __init__(self,
                  session_id=platform.node(),
-                 drmp=None,
-                 vendor_specific_application_id=[VendorIdAVP(VENDOR_ID_3GPP), AuthApplicationIdAVP(DIAMETER_APPLICATION_S6a_S6d)],
+                 vendor_specific_application_id=[VendorIdAVP(VENDOR_ID_3GPP), AuthApplicationIdAVP(DIAMETER_APPLICATION_Cx)],
                  result_code=None,
                  experimental_result=None,
                  auth_session_state=NO_STATE_MAINTAINED,
                  origin_host=platform.node(), 
                  origin_realm=socket.getfqdn(), 
-                 oc_supported_features=None,
-                 oc_olr=None,
-                 load=None,
+                 server_name=None,
+                 server_capabilities=None,
                  supported_features=None,
-                 authentication_info=None,
-                 ue_usage_type=None,
                  failed_avp=None,
                  proxy_info=None,
                  route_record=None,
                  **kwargs):
 
         DiameterAnswer.__init__(self, 
-                                command_code=AUTHENTICATION_INFORMATION_MESSAGE, 
-                                application_id=DIAMETER_APPLICATION_S6a_S6d)
+                                command_code=USER_AUTHORIZATION_MESSAGE, 
+                                application_id=DIAMETER_APPLICATION_Cx)
 
         DiameterAnswer._load(self, locals())
 
@@ -124,7 +119,7 @@ class UserAuthorizationRequest(DiameterRequest):
 
     def __init__(self, 
                  session_id=platform.node(), 
-                 vendor_specific_application_id=[VendorIdAVP(VENDOR_ID_3GPP), AuthApplicationIdAVP(DIAMETER_APPLICATION_S6a_S6d)],
+                 vendor_specific_application_id=[VendorIdAVP(VENDOR_ID_3GPP), AuthApplicationIdAVP(DIAMETER_APPLICATION_Cx)],
                  auth_session_state=NO_STATE_MAINTAINED,
                  origin_host=platform.node(), 
                  origin_realm=socket.getfqdn(), 
@@ -141,7 +136,7 @@ class UserAuthorizationRequest(DiameterRequest):
 
         DiameterRequest.__init__(self, 
                                  command_code=USER_AUTHORIZATION_MESSAGE, 
-                                 application_id=DIAMETER_APPLICATION_S6a_S6d)
+                                 application_id=DIAMETER_APPLICATION_Cx)
 
         DiameterRequest._load(self, locals())
 
@@ -182,7 +177,7 @@ class CancelLocationAnswer(DiameterAnswer):
     def __init__(self,
                  session_id=platform.node(),
                  drmp=None,
-                 vendor_specific_application_id=[VendorIdAVP(VENDOR_ID_3GPP), AuthApplicationIdAVP(DIAMETER_APPLICATION_S6a_S6d)],
+                 vendor_specific_application_id=[VendorIdAVP(VENDOR_ID_3GPP), AuthApplicationIdAVP(DIAMETER_APPLICATION_Cx)],
                  supported_features=None,
                  result_code=None,
                  experimental_result=None,
@@ -196,7 +191,7 @@ class CancelLocationAnswer(DiameterAnswer):
 
         DiameterAnswer.__init__(self, 
                                 command_code=CANCEL_LOCATION_MESSAGE, 
-                                application_id=DIAMETER_APPLICATION_S6a_S6d)
+                                application_id=DIAMETER_APPLICATION_Cx)
 
         DiameterAnswer._load(self, locals())
 
@@ -244,7 +239,7 @@ class CancelLocationRequest(DiameterRequest):
     def __init__(self, 
                  session_id=platform.node(), 
                  drmp=None,
-                 vendor_specific_application_id=[VendorIdAVP(VENDOR_ID_3GPP), AuthApplicationIdAVP(DIAMETER_APPLICATION_S6a_S6d)],
+                 vendor_specific_application_id=[VendorIdAVP(VENDOR_ID_3GPP), AuthApplicationIdAVP(DIAMETER_APPLICATION_Cx)],
                  auth_session_state=NO_STATE_MAINTAINED,
                  origin_host=platform.node(), 
                  origin_realm=socket.getfqdn(), 
@@ -260,7 +255,7 @@ class CancelLocationRequest(DiameterRequest):
 
         DiameterRequest.__init__(self, 
                                  command_code=CANCEL_LOCATION_MESSAGE, 
-                                 application_id=DIAMETER_APPLICATION_S6a_S6d)
+                                 application_id=DIAMETER_APPLICATION_Cx)
 
         DiameterRequest._load(self, locals())
 
@@ -301,7 +296,7 @@ class NotifyAnswer(DiameterAnswer):
     def __init__(self,
                  session_id=platform.node(),
                  drmp=None,
-                 vendor_specific_application_id=[VendorIdAVP(VENDOR_ID_3GPP), AuthApplicationIdAVP(DIAMETER_APPLICATION_S6a_S6d)],
+                 vendor_specific_application_id=[VendorIdAVP(VENDOR_ID_3GPP), AuthApplicationIdAVP(DIAMETER_APPLICATION_Cx)],
                  result_code=None,
                  experimental_result=None,
                  auth_session_state=NO_STATE_MAINTAINED,
@@ -318,7 +313,7 @@ class NotifyAnswer(DiameterAnswer):
 
         DiameterAnswer.__init__(self, 
                                 command_code=NOTIFY_MESSAGE, 
-                                application_id=DIAMETER_APPLICATION_S6a_S6d)
+                                application_id=DIAMETER_APPLICATION_Cx)
 
         DiameterAnswer._load(self, locals())
 
@@ -371,7 +366,7 @@ class NotifyRequest(DiameterRequest):
 
     def __init__(self, 
                  session_id=platform.node(), 
-                 vendor_specific_application_id=[VendorIdAVP(VENDOR_ID_3GPP), AuthApplicationIdAVP(DIAMETER_APPLICATION_S6a_S6d)],
+                 vendor_specific_application_id=[VendorIdAVP(VENDOR_ID_3GPP), AuthApplicationIdAVP(DIAMETER_APPLICATION_Cx)],
                  drmp=None,
                  auth_session_state=NO_STATE_MAINTAINED,
                  origin_host=platform.node(), 
@@ -399,7 +394,7 @@ class NotifyRequest(DiameterRequest):
 
         DiameterRequest.__init__(self, 
                                  command_code=NOTIFY_MESSAGE, 
-                                 application_id=DIAMETER_APPLICATION_S6a_S6d)
+                                 application_id=DIAMETER_APPLICATION_Cx)
 
         DiameterRequest._load(self, locals())
 
@@ -440,7 +435,7 @@ class PurgeUeAnswer(DiameterAnswer):
     def __init__(self,
                  session_id=platform.node(),
                  drmp=None,
-                 vendor_specific_application_id=[VendorIdAVP(VENDOR_ID_3GPP), AuthApplicationIdAVP(DIAMETER_APPLICATION_S6a_S6d)],
+                 vendor_specific_application_id=[VendorIdAVP(VENDOR_ID_3GPP), AuthApplicationIdAVP(DIAMETER_APPLICATION_Cx)],
                  result_code=None,
                  experimental_result=None,
                  auth_session_state=NO_STATE_MAINTAINED,
@@ -457,7 +452,7 @@ class PurgeUeAnswer(DiameterAnswer):
 
         DiameterAnswer.__init__(self, 
                                 command_code=PURGE_UE_MESSAGE, 
-                                application_id=DIAMETER_APPLICATION_S6a_S6d)
+                                application_id=DIAMETER_APPLICATION_Cx)
 
         DiameterAnswer._load(self, locals())
 
@@ -503,7 +498,7 @@ class PurgeUeRequest(DiameterRequest):
     def __init__(self, 
                  session_id=platform.node(), 
                  drmp=None,
-                 vendor_specific_application_id=[VendorIdAVP(VENDOR_ID_3GPP), AuthApplicationIdAVP(DIAMETER_APPLICATION_S6a_S6d)],
+                 vendor_specific_application_id=[VendorIdAVP(VENDOR_ID_3GPP), AuthApplicationIdAVP(DIAMETER_APPLICATION_Cx)],
                  auth_session_state=NO_STATE_MAINTAINED,
                  origin_host=platform.node(), 
                  origin_realm=socket.getfqdn(), 
@@ -520,7 +515,7 @@ class PurgeUeRequest(DiameterRequest):
 
         DiameterRequest.__init__(self, 
                                  command_code=PURGE_UE_MESSAGE, 
-                                 application_id=DIAMETER_APPLICATION_S6a_S6d)
+                                 application_id=DIAMETER_APPLICATION_Cx)
 
         DiameterRequest._load(self, locals())
 
@@ -563,7 +558,7 @@ class UpdateLocationAnswer(DiameterAnswer):
     def __init__(self,
                  session_id=platform.node(),
                  drmp=None,
-                 vendor_specific_application_id=[VendorIdAVP(VENDOR_ID_3GPP), AuthApplicationIdAVP(DIAMETER_APPLICATION_S6a_S6d)],
+                 vendor_specific_application_id=[VendorIdAVP(VENDOR_ID_3GPP), AuthApplicationIdAVP(DIAMETER_APPLICATION_Cx)],
                  result_code=None,
                  experimental_result=None,
                  auth_session_state=NO_STATE_MAINTAINED,
@@ -583,7 +578,7 @@ class UpdateLocationAnswer(DiameterAnswer):
 
         DiameterAnswer.__init__(self, 
                                 command_code=UPDATE_LOCATION_MESSAGE, 
-                                application_id=DIAMETER_APPLICATION_S6a_S6d)
+                                application_id=DIAMETER_APPLICATION_Cx)
 
         DiameterAnswer._load(self, locals())
 
@@ -636,7 +631,7 @@ class UpdateLocationRequest(DiameterRequest):
     def __init__(self, 
                  session_id=platform.node(), 
                  drmp=None,
-                 vendor_specific_application_id=[VendorIdAVP(VENDOR_ID_3GPP), AuthApplicationIdAVP(DIAMETER_APPLICATION_S6a_S6d)],
+                 vendor_specific_application_id=[VendorIdAVP(VENDOR_ID_3GPP), AuthApplicationIdAVP(DIAMETER_APPLICATION_Cx)],
                  auth_session_state=NO_STATE_MAINTAINED,
                  origin_host=platform.node(), 
                  origin_realm=socket.getfqdn(), 
@@ -667,6 +662,6 @@ class UpdateLocationRequest(DiameterRequest):
 
         DiameterRequest.__init__(self, 
                                  command_code=UPDATE_LOCATION_MESSAGE, 
-                                 application_id=DIAMETER_APPLICATION_S6a_S6d)
+                                 application_id=DIAMETER_APPLICATION_Cx)
 
         DiameterRequest._load(self, locals())
