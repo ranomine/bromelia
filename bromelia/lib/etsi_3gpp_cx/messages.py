@@ -82,23 +82,24 @@ class UserAuthorizationAnswer(DiameterAnswer):
 
 
 class UserAuthorizationRequest(DiameterRequest):
-    """Implementation of Authentication-Information-Request (AIR) command as per 
-    clause 7.2.5 of ETSI TS 129 272 V15.4.0 (2018-07).
+    """Implementation of User-Authorization-Request (UAR) command as per 
+    clause 6.1.1 of ETSI TS 129 229 V16.3.0 (2024-10).
 
-    The Authentication-Information-Request is indicated by the Command Code 
-    field set to 318 and the 'R' bit set in the Command Flags field.
+    The User-Authorization-Request is indicated by the Command Code field
+    set to 300 and the 'R' bit set in the Command Flags field.
 
     Usage::
 
-        >>> from bromelia.lib.etsi_3gpp_s6a import AIR
-        >>> air_avps = {
+        >>> from bromelia.lib.etsi_3gpp_cx import UAR
+        >>> uar_avps = {
         ...     "destination_realm": "example.com",
         ...     "user_name": "frodo",
-        ...     "visited_plmn_id": bytes.fromhex("ffffff")
+        ...     "public_identity": "sip:frodo@example.com",
+        ...     "server_name": "server.example.com"
         ... }
-        >>> air = AIR(**air_avps)
-        >>> air
-        <Diameter Message: 318 [AIR] REQ|PXY, 16777216 [3GPP Cx], 8 AVP(s)>
+        >>> uar = UAR(**uar_avps)
+        >>> uar
+        <Diameter Message: 300 [UAR] REQ|PXY, 16777216 [3GPP Cx], 8 AVP(s)>
     """    
 
     mandatory = {
@@ -108,21 +109,21 @@ class UserAuthorizationRequest(DiameterRequest):
                     "origin_realm": OriginRealmAVP,
                     "destination_realm": DestinationRealmAVP,
                     "user_name": UserNameAVP,
+                    "public_identity": PublicIdentityAVP,
+                    "server_name": ServerNameAVP,
     }
 
     optionals = {
-                    # "drmp": DrmpAVP,
                     "vendor_specific_application_id": VendorSpecificApplicationIdAVP,
                     "destination_host": DestinationHostAVP,
                     "supported_features": SupportedFeaturesAVP,
-                    "air_flags": AirFlagsAVP,
+                    "server_capabilities": ServerCapabilitiesAVP,
                     "proxy_info": ProxyInfoAVP,
                     "route_record": RouteRecordAVP,
     }
 
     def __init__(self, 
                  session_id=platform.node(), 
-                 drmp=None,
                  vendor_specific_application_id=[VendorIdAVP(VENDOR_ID_3GPP), AuthApplicationIdAVP(DIAMETER_APPLICATION_S6a_S6d)],
                  auth_session_state=NO_STATE_MAINTAINED,
                  origin_host=platform.node(), 
@@ -130,15 +131,16 @@ class UserAuthorizationRequest(DiameterRequest):
                  destination_host=None,
                  destination_realm=None,
                  user_name=None,
-                 oc_supported_features=None,
+                 public_identity=None,
+                 server_name=None,
                  supported_features=None,
-                 air_flags=None,
+                 server_capabilities=None,
                  proxy_info=None,
                  route_record=None,
                  **kwargs):
 
         DiameterRequest.__init__(self, 
-                                 command_code=AUTHENTICATION_INFORMATION_MESSAGE, 
+                                 command_code=USER_AUTHORIZATION_MESSAGE, 
                                  application_id=DIAMETER_APPLICATION_S6a_S6d)
 
         DiameterRequest._load(self, locals())
