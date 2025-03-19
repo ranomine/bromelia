@@ -15,7 +15,7 @@ from ...avps.etsi_3gpp.ts_129_212 import RatTypeAVP
 from ...avps.etsi_3gpp.ts_129_229 import SupportedFeaturesAVP
 from ...avps.etsi_3gpp.ts_129_229 import VisitedNetworkIdentifierAVP
 from ...avps.etsi_3gpp.ts_129_229 import ServerAssignmentTypeAVP
-from ...avps.etsi_3gpp.ts_129_229 import ServerCapabilitiesTypeAVP
+from ...avps.etsi_3gpp.ts_129_229 import ServerCapabilitiesAVP
 
 from ...avps.ietf.rfc6733 import AuthApplicationIdAVP
 from ...avps.ietf.rfc6733 import AuthSessionStateAVP
