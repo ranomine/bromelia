@@ -108,7 +108,6 @@ class UserAuthorizationRequest(DiameterRequest):
                     "origin_realm": OriginRealmAVP,
                     "destination_realm": DestinationRealmAVP,
                     "user_name": UserNameAVP,
-                    "visited_plmn_id": VisitedPlmnIdAVP,
     }
 
     optionals = {
@@ -136,7 +135,6 @@ class UserAuthorizationRequest(DiameterRequest):
                  supported_features=None,
                  requested_eutran_authentication_info=None,
                  requested_utran_geran_authentication_info=None,
-                 visited_plmn_id=None,
                  air_flags=None,
                  proxy_info=None,
                  route_record=None,
