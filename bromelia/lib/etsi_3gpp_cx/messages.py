@@ -499,3 +499,116 @@ class MultimediaAuthRequest(DiameterRequest):
                                  application_id=DIAMETER_APPLICATION_Cx)
 
         DiameterRequest._load(self, locals())
+
+
+class RegistrationTerminationAnswer(DiameterAnswer):
+    """Implementation of Registration-Termination-Answer (RTA) command as per 
+    clause 6.1.10 of ETSI TS 129 229 V16.3.0 (2024-10).
+
+    The Registration-Termination-Answer is indicated by the Command Code field
+    set to 304 and Command Flag's 'R' bit cleared.
+
+    Usage::
+
+        >>> from bromelia.lib.etsi_3gpp_cx import RTA
+        >>> rta = RTA()
+        >>> rta
+        <Diameter Message: 304 [RTA] PXY, 16777216 [3GPP Cx], 5 AVP(s)>
+    """
+
+    mandatory = {
+                    "session_id": SessionIdAVP,
+                    "auth_session_state": AuthSessionStateAVP,
+                    "origin_host": OriginHostAVP,
+                    "origin_realm": OriginRealmAVP,
+    }
+
+    optionals = { 
+                    "vendor_specific_application_id": VendorSpecificApplicationIdAVP,
+                    "result_code": ResultCodeAVP,
+                    "experimental_result": ExperimentalResultAVP,
+                    "supported_features": SupportedFeaturesAVP,
+                    "failed_avp": FailedAvpAVP,
+                    "proxy_info": ProxyInfoAVP,
+                    "route_record": RouteRecordAVP,
+    }
+
+    def __init__(self,
+                 session_id=platform.node(),
+                 vendor_specific_application_id=[VendorIdAVP(VENDOR_ID_3GPP), AuthApplicationIdAVP(DIAMETER_APPLICATION_Cx)],
+                 result_code=None,
+                 experimental_result=None,
+                 auth_session_state=NO_STATE_MAINTAINED,
+                 origin_host=platform.node(), 
+                 origin_realm=socket.getfqdn(), 
+                 supported_features=None,
+                 failed_avp=None,
+                 proxy_info=None,
+                 route_record=None,
+                 **kwargs):
+
+        DiameterAnswer.__init__(self, 
+                                command_code=REGISTRATION_TERMINATION_MESSAGE, 
+                                application_id=DIAMETER_APPLICATION_Cx)
+
+        DiameterAnswer._load(self, locals())
+
+
+class RegistrationTerminationRequest(DiameterRequest):
+    """Implementation of Registration-Termination-Request (RTR) command as per 
+    clause 6.1.9 of ETSI TS 129 229 V16.3.0 (2024-10).
+
+    The Registration-Termination-Request is indicated by the Command Code field
+    set to 304 and the 'R' bit set in the Command Flags field.
+
+    Usage::
+
+        >>> from bromelia.lib.etsi_3gpp_cx import RTR
+        >>> rtr_avps = {
+        ...     "destination_realm": "example.com",
+        ...     "public_identity": "sip:frodo@example.com",
+        ...     "deregistration_reason": DEREGISTRATION_REASON_PERMANENT_TERMINATION
+        ... }
+        >>> rtr = RTR(**rtr_avps)
+        >>> rtr
+        <Diameter Message: 304 [RTR] REQ|PXY, 16777216 [3GPP Cx], 7 AVP(s)>
+    """    
+
+    mandatory = {
+                    "session_id": SessionIdAVP,
+                    "auth_session_state": AuthSessionStateAVP,
+                    "origin_host": OriginHostAVP,
+                    "origin_realm": OriginRealmAVP,
+                    "destination_realm": DestinationRealmAVP,
+                    "public_identity": PublicIdentityAVP,
+                    "deregistration_reason": DeregistrationReasonAVP,
+    }
+
+    optionals = {
+                    "vendor_specific_application_id": VendorSpecificApplicationIdAVP,
+                    "destination_host": DestinationHostAVP,
+                    "supported_features": SupportedFeaturesAVP,
+                    "proxy_info": ProxyInfoAVP,
+                    "route_record": RouteRecordAVP,
+    }
+
+    def __init__(self, 
+                 session_id=platform.node(), 
+                 vendor_specific_application_id=[VendorIdAVP(VENDOR_ID_3GPP), AuthApplicationIdAVP(DIAMETER_APPLICATION_Cx)],
+                 auth_session_state=NO_STATE_MAINTAINED,
+                 origin_host=platform.node(), 
+                 origin_realm=socket.getfqdn(), 
+                 destination_host=None,
+                 destination_realm=None,
+                 public_identity=None,
+                 deregistration_reason=None,
+                 supported_features=None,
+                 proxy_info=None,
+                 route_record=None,
+                 **kwargs):
+
+        DiameterRequest.__init__(self, 
+                                 command_code=REGISTRATION_TERMINATION_MESSAGE, 
+                                 application_id=DIAMETER_APPLICATION_Cx)
+
+        DiameterRequest._load(self, locals())
