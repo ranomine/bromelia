@@ -16,4 +16,4 @@ spec:
       ip_address: 199.255.7.206
       hostname: rbx-prd-dra.epc.mnc840.mcc310.3gppnetwork.org
       realm: epc.mnc840.mcc310.3gppnetwork.org
-      port: 3868
+      port: 3870
