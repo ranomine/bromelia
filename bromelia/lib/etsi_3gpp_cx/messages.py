@@ -199,68 +199,83 @@ class ServerAssignmentAnswer(DiameterAnswer):
 
 
 class ServerAssignmentRequest(DiameterRequest):
-    """Implementation of Server-Assignment-Request (SAR) command as per 
-    clause 6.1.3 of ETSI TS 129 229 V16.3.0 (2024-10).
-
-    The Server-Assignment-Request is indicated by the Command Code field
-    set to 301 and the 'R' bit set in the Command Flags field.
-
-    Usage::
-
-        >>> from bromelia.lib.etsi_3gpp_cx import SAR
-        >>> sar_avps = {
-        ...     "destination_realm": "example.com",
-        ...     "user_name": "frodo",
-        ...     "server_name": "server.example.com",
-        ...     "server_assignment_type": SERVER_ASSIGNMENT_TYPE_REGISTRATION
-        ... }
-        >>> sar = SAR(**sar_avps)
-        >>> sar
-        <Diameter Message: 301 [SAR] REQ|PXY, 16777216 [3GPP Cx], 9 AVP(s)>
-    """    
-
-    mandatory = {
-                    "session_id": SessionIdAVP,
-                    "auth_session_state": AuthSessionStateAVP,
-                    "origin_host": OriginHostAVP,
-                    "origin_realm": OriginRealmAVP,
-                    "destination_realm": DestinationRealmAVP,
-                    "user_name": UserNameAVP,
-                    "server_name": ServerNameAVP,
-                    "server_assignment_type": ServerAssignmentTypeAVP,
+    """Implementation of Server-Assignment-Request (SAR) command as per 3GPP TS 29.229.
+    
+    The Server-Assignment-Request (SAR) command, indicated by the Command-Code field set to 301
+    and the 'R' bit set in the Command Flags field, is sent by a Diameter client to a Diameter
+    server in order to request the assignment of a server to serve a user.
+    
+    Message Format:
+        < Server-Assignment-Request > ::= < Diameter Header: 301, REQ, PXY >
+                                        < Session-Id >
+                                        { Auth-Application-Id }
+                                        { Auth-Session-State }
+                                        { Origin-Host }
+                                        { Origin-Realm }
+                                        { Destination-Realm }
+                                        [ Destination-Host ]
+                                        { User-Name }
+                                        { Server-Assignment-Type }
+                                        [ Server-Name ]
+                                        [ Server-Capabilities ]
+                                        [ Supported-Features ]
+                                        [ Proxy-Info ]
+                                        [ Route-Record ]
+    """
+    code: int = 301
+    name: str = "Server-Assignment-Request"
+    avp_def: dict = {
+        "mandatory": {
+            "session_id": SessionIdAVP,
+            "auth_application_id": AuthApplicationIdAVP,
+            "auth_session_state": AuthSessionStateAVP,
+            "origin_host": OriginHostAVP,
+            "origin_realm": OriginRealmAVP,
+            "destination_realm": DestinationRealmAVP,
+            "user_name": UserNameAVP,
+            "server_assignment_type": ServerAssignmentTypeAVP,
+        },
+        "optionals": {
+            "destination_host": DestinationHostAVP,
+            "server_name": ServerNameAVP,
+            "server_capabilities": ServerCapabilitiesAVP,
+            "supported_features": SupportedFeaturesAVP,
+            "proxy_info": ProxyInfoAVP,
+            "route_record": RouteRecordAVP,
+        }
     }
 
-    optionals = {
-                    "vendor_specific_application_id": VendorSpecificApplicationIdAVP,
-                    "destination_host": DestinationHostAVP,
-                    "supported_features": SupportedFeaturesAVP,
-                    "server_capabilities": ServerCapabilitiesAVP,
-                    "proxy_info": ProxyInfoAVP,
-                    "route_record": RouteRecordAVP,
-    }
-
-    def __init__(self, 
-                 session_id=platform.node(), 
-                 vendor_specific_application_id=[VendorIdAVP(VENDOR_ID_3GPP), AuthApplicationIdAVP(DIAMETER_APPLICATION_Cx)],
-                 auth_session_state=NO_STATE_MAINTAINED,
-                 origin_host=platform.node(), 
-                 origin_realm=socket.getfqdn(), 
-                 destination_host=None,
-                 destination_realm=None,
-                 user_name=None,
-                 server_name=None,
-                 server_assignment_type=None,
-                 supported_features=None,
-                 server_capabilities=None,
-                 proxy_info=None,
-                 route_record=None,
-                 **kwargs):
-
-        DiameterRequest.__init__(self, 
-                                 command_code=SERVER_ASSIGNMENT_MESSAGE, 
-                                 application_id=DIAMETER_APPLICATION_Cx)
-
-        DiameterRequest._load(self, locals())
+    def __init__(
+        self,
+        session_id: str,
+        auth_session_state: int,
+        origin_host: str,
+        origin_realm: str,
+        destination_realm: str,
+        user_name: str,
+        server_assignment_type: int,
+        destination_host: str = None,
+        server_name: str = None,
+        server_capabilities: dict = None,
+        supported_features: list = None,
+        proxy_info: list = None,
+        route_record: list = None,
+    ):
+        super().__init__()
+        self.session_id = session_id
+        self.auth_application_id = DIAMETER_APPLICATION_Cx
+        self.auth_session_state = auth_session_state
+        self.origin_host = origin_host
+        self.origin_realm = origin_realm
+        self.destination_realm = destination_realm
+        self.user_name = user_name
+        self.server_assignment_type = server_assignment_type
+        self.destination_host = destination_host
+        self.server_name = server_name
+        self.server_capabilities = server_capabilities
+        self.supported_features = supported_features
+        self.proxy_info = proxy_info
+        self.route_record = route_record
 
 
 class LocationInfoAnswer(DiameterAnswer):
