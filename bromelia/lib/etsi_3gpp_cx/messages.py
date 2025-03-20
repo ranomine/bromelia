@@ -612,3 +612,155 @@ class RegistrationTerminationRequest(DiameterRequest):
                                  application_id=DIAMETER_APPLICATION_Cx)
 
         DiameterRequest._load(self, locals())
+
+
+class PushProfileRequest(DiameterRequest):
+    """Implementation of Push-Profile-Request (PPR) command as per 3GPP TS 29.229.
+    
+    The Push-Profile-Request (PPR) command, indicated by the Command-Code field set to 305
+    and the 'R' bit set in the Command Flags field, is sent by a Diameter client to a Diameter
+    server in order to update the user profile in the Diameter server.
+    
+    Message Format:
+        < Push-Profile-Request > ::= < Diameter Header: 305, REQ, PXY >
+                                    < Session-Id >
+                                    { Auth-Application-Id }
+                                    { Auth-Session-State }
+                                    { Origin-Host }
+                                    { Origin-Realm }
+                                    { Destination-Realm }
+                                    [ Destination-Host ]
+                                    { User-Name }
+                                    [ User-Data ]
+                                    [ Charging-Information ]
+                                    [ Supported-Features ]
+                                    [ Proxy-Info ]
+                                    [ Route-Record ]
+    """
+    code: int = 305
+    name: str = "Push-Profile-Request"
+    avp_def: dict = {
+        "mandatory": {
+            "session_id": SessionIdAVP,
+            "auth_application_id": AuthApplicationIdAVP,
+            "auth_session_state": AuthSessionStateAVP,
+            "origin_host": OriginHostAVP,
+            "origin_realm": OriginRealmAVP,
+            "destination_realm": DestinationRealmAVP,
+            "user_name": UserNameAVP,
+        },
+        "optionals": {
+            "destination_host": DestinationHostAVP,
+            "user_data": UserDataAVP,
+            "charging_information": ChargingInformationAVP,
+            "supported_features": SupportedFeaturesAVP,
+            "proxy_info": ProxyInfoAVP,
+            "route_record": RouteRecordAVP,
+        }
+    }
+
+    def __init__(
+        self,
+        session_id: str,
+        auth_session_state: int,
+        origin_host: str,
+        origin_realm: str,
+        destination_realm: str,
+        user_name: str,
+        destination_host: str = None,
+        user_data: str = None,
+        charging_information: dict = None,
+        supported_features: list = None,
+        proxy_info: list = None,
+        route_record: list = None,
+    ):
+        super().__init__()
+        self.session_id = session_id
+        self.auth_application_id = DIAMETER_APPLICATION_Cx
+        self.auth_session_state = auth_session_state
+        self.origin_host = origin_host
+        self.origin_realm = origin_realm
+        self.destination_realm = destination_realm
+        self.user_name = user_name
+        self.destination_host = destination_host
+        self.user_data = user_data
+        self.charging_information = charging_information
+        self.supported_features = supported_features
+        self.proxy_info = proxy_info
+        self.route_record = route_record
+
+
+class PushProfileAnswer(DiameterAnswer):
+    """Implementation of Push-Profile-Answer (PPA) command as per 3GPP TS 29.229.
+    
+    The Push-Profile-Answer (PPA) command, indicated by the Command-Code field set to 305
+    and the 'R' bit cleared in the Command Flags field, is sent by a Diameter server to a
+    Diameter client in response to the Push-Profile-Request command.
+    
+    Message Format:
+        < Push-Profile-Answer > ::= < Diameter Header: 305, PXY >
+                                   < Session-Id >
+                                   { Auth-Application-Id }
+                                   { Auth-Session-State }
+                                   { Origin-Host }
+                                   { Origin-Realm }
+                                   [ Result-Code ]
+                                   [ Experimental-Result ]
+                                   [ Error-Message ]
+                                   [ Error-Reporting-Host ]
+                                   [ Failed-AVP ]
+                                   [ Supported-Features ]
+                                   [ Proxy-Info ]
+                                   [ Route-Record ]
+    """
+    code: int = 305
+    name: str = "Push-Profile-Answer"
+    avp_def: dict = {
+        "mandatory": {
+            "session_id": SessionIdAVP,
+            "auth_application_id": AuthApplicationIdAVP,
+            "auth_session_state": AuthSessionStateAVP,
+            "origin_host": OriginHostAVP,
+            "origin_realm": OriginRealmAVP,
+        },
+        "optionals": {
+            "result_code": ResultCodeAVP,
+            "experimental_result": ExperimentalResultAVP,
+            "error_message": ErrorMessageAVP,
+            "error_reporting_host": ErrorReportingHostAVP,
+            "failed_avp": FailedAvpAVP,
+            "supported_features": SupportedFeaturesAVP,
+            "proxy_info": ProxyInfoAVP,
+            "route_record": RouteRecordAVP,
+        }
+    }
+
+    def __init__(
+        self,
+        session_id: str,
+        auth_session_state: int,
+        origin_host: str,
+        origin_realm: str,
+        result_code: int = None,
+        experimental_result: dict = None,
+        error_message: str = None,
+        error_reporting_host: str = None,
+        failed_avp: list = None,
+        supported_features: list = None,
+        proxy_info: list = None,
+        route_record: list = None,
+    ):
+        super().__init__()
+        self.session_id = session_id
+        self.auth_application_id = DIAMETER_APPLICATION_Cx
+        self.auth_session_state = auth_session_state
+        self.origin_host = origin_host
+        self.origin_realm = origin_realm
+        self.result_code = result_code
+        self.experimental_result = experimental_result
+        self.error_message = error_message
+        self.error_reporting_host = error_reporting_host
+        self.failed_avp = failed_avp
+        self.supported_features = supported_features
+        self.proxy_info = proxy_info
+        self.route_record = route_record

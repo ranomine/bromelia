@@ -18,6 +18,8 @@ from ...avps.etsi_3gpp.ts_129_229 import ServerCapabilitiesAVP
 from ...avps.etsi_3gpp.ts_129_229 import ServerNameAVP
 from ...avps.etsi_3gpp.ts_129_229 import PublicIdentityAVP
 from ...avps.etsi_3gpp.ts_129_229 import DeregistrationReasonAVP
+from ...avps.etsi_3gpp.ts_129_229 import UserDataAVP
+from ...avps.etsi_3gpp.ts_129_229 import ChargingInformationAVP
 
 from ...avps.ietf.rfc6733 import AuthApplicationIdAVP
 from ...avps.ietf.rfc6733 import AuthSessionStateAVP
@@ -34,3 +36,5 @@ from ...avps.ietf.rfc6733 import SessionIdAVP
 from ...avps.ietf.rfc6733 import UserNameAVP
 from ...avps.ietf.rfc6733 import VendorIdAVP
 from ...avps.ietf.rfc6733 import VendorSpecificApplicationIdAVP
+from ...avps.ietf.rfc6733 import ErrorMessageAVP
+from ...avps.ietf.rfc6733 import ErrorReportingHostAVP
