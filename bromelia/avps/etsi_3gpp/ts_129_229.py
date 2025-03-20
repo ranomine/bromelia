@@ -15,7 +15,7 @@ from ...base import DiameterAVP
 from ...constants.etsi_3gpp.ts_129_229 import *
 from ...types import *
 
-class PrimaryEventChargingFunctionNameAVP(DiameterAVP, DiameterURI):
+class PrimaryEventChargingFunctionNameAVP(DiameterAVP, DiameterIdentityType):
     """Implementation of Primary-Event-Charging-Function-Name AVP in Section 6.3.20
     of ETSI TS 129 229 V16.3.0 (2024-10).
 
@@ -32,7 +32,7 @@ class PrimaryEventChargingFunctionNameAVP(DiameterAVP, DiameterURI):
         DiameterURI.__init__(self, data=data, vendor_id=VENDOR_ID_3GPP)
 
 
-class SecondaryEventChargingFunctionNameAVP(DiameterAVP, DiameterURI):
+class SecondaryEventChargingFunctionNameAVP(DiameterAVP, DiameterIdentityType):
     """Implementation of Secondary-Event-Charging-Function-Name AVP in Section 6.3.21
     of ETSI TS 129 229 V16.3.0 (2024-10).
 
@@ -49,7 +49,7 @@ class SecondaryEventChargingFunctionNameAVP(DiameterAVP, DiameterURI):
         DiameterURI.__init__(self, data=data, vendor_id=VENDOR_ID_3GPP)
 
 
-class PrimaryChargingCollectionFunctionNameAVP(DiameterAVP, DiameterURI):
+class PrimaryChargingCollectionFunctionNameAVP(DiameterAVP, DiameterIdentityType):
     """Implementation of Primary-Charging-Collection-Function-Name AVP in Section 6.3.22
     of ETSI TS 129 229 V16.3.0 (2024-10).
 
@@ -66,7 +66,7 @@ class PrimaryChargingCollectionFunctionNameAVP(DiameterAVP, DiameterURI):
         DiameterURI.__init__(self, data=data, vendor_id=VENDOR_ID_3GPP)
 
 
-class SecondaryChargingCollectionFunctionNameAVP(DiameterAVP, DiameterURI):
+class SecondaryChargingCollectionFunctionNameAVP(DiameterAVP, DiameterIdentityType):
     """Implementation of Secondary-Charging-Collection-Function-Name AVP in Section 6.3.23
     of ETSI TS 129 229 V16.3.0 (2024-10).
 
