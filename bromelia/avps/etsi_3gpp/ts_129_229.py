@@ -15,6 +15,13 @@ from ...base import DiameterAVP
 from ...constants.etsi_3gpp.ts_129_229 import *
 from ...types import *
 
+from .ts_129_214 import (
+    PrimaryEventChargingFunctionNameAVP,
+    SecondaryEventChargingFunctionNameAVP,
+    PrimaryChargingCollectionFunctionNameAVP,
+    SecondaryChargingCollectionFunctionNameAVP,
+)
+
 
 class FeatureListIdAVP(DiameterAVP, Unsigned32Type):
     """Implementation of Feature-List-ID AVP in Section 6.3.30 of
@@ -392,5 +399,47 @@ class ServerCapabilitiesAVP(DiameterAVP, GroupedType):
                              ServerCapabilitiesAVP.code,
                              ServerCapabilitiesAVP.vendor_id)
         DiameterAVP.set_mandatory_bit(self, True)
+        DiameterAVP.set_vendor_id_bit(self, True)
+        GroupedType.__init__(self, data=data, vendor_id=VENDOR_ID_3GPP)
+
+
+class UserDataAVP(DiameterAVP, OctetStringType):
+    """Implementation of User-Data AVP in Section 6.3.32
+    of ETSI TS 129 229 V16.3.0 (2024-10).
+
+    The User-Data AVP (AVP Code 702) is of type OctetString.
+    """
+    code = USER_DATA_AVP_CODE
+    vendor_id = VENDOR_ID_3GPP
+
+    def __init__(self, data):
+        DiameterAVP.__init__(self, 
+                             UserDataAVP.code,
+                             UserDataAVP.vendor_id)
+        DiameterAVP.set_vendor_id_bit(self, True)
+        OctetStringType.__init__(self, data=data, vendor_id=VENDOR_ID_3GPP)
+
+
+class ChargingInformationAVP(DiameterAVP, GroupedType):
+    """Implementation of Charging-Information AVP in Section 6.3.19
+    of ETSI TS 129 229 V16.3.0 (2024-10).
+
+    The Charging-Information AVP (AVP Code 618) is of type Grouped.
+    """
+    code = CHARGING_INFORMATION_AVP_CODE
+    vendor_id = VENDOR_ID_3GPP
+
+    mandatory = {
+                    "primary_event_charging_function_name": PrimaryEventChargingFunctionNameAVP,
+                    "secondary_event_charging_function_name": SecondaryEventChargingFunctionNameAVP,
+                    "primary_charging_collection_function_name": PrimaryChargingCollectionFunctionNameAVP,
+                    "secondary_charging_collection_function_name": SecondaryChargingCollectionFunctionNameAVP,
+    }
+    optionals = {}
+
+    def __init__(self, data):
+        DiameterAVP.__init__(self, 
+                             ChargingInformationAVP.code,
+                             ChargingInformationAVP.vendor_id)
         DiameterAVP.set_vendor_id_bit(self, True)
         GroupedType.__init__(self, data=data, vendor_id=VENDOR_ID_3GPP)        

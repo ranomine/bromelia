@@ -39,6 +39,8 @@ INTEGRITY_KEY_AVP_CODE = convert_to_4_bytes(626)
 SUPPORTED_FEATURES_AVP_CODE = convert_to_4_bytes(628)
 FEATURE_LIST_ID_AVP_CODE = convert_to_4_bytes(629)
 FEATURE_LIST_AVP_CODE = convert_to_4_bytes(630)
+USER_DATA_AVP_CODE = convert_to_4_bytes(702)
+CHARGING_INFORMATION_AVP_CODE = convert_to_4_bytes(618)
 
 #: List of Reason-Code AVP values.
 #: For more information, please refer to Section 6.3.17 of 
