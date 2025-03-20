@@ -15,12 +15,72 @@ from ...base import DiameterAVP
 from ...constants.etsi_3gpp.ts_129_229 import *
 from ...types import *
 
-from .ts_129_214 import (
-    PrimaryEventChargingFunctionNameAVP,
-    SecondaryEventChargingFunctionNameAVP,
-    PrimaryChargingCollectionFunctionNameAVP,
-    SecondaryChargingCollectionFunctionNameAVP,
-)
+class PrimaryEventChargingFunctionNameAVP(DiameterAVP, DiameterURI):
+    """Implementation of Primary-Event-Charging-Function-Name AVP in Section 6.3.20
+    of ETSI TS 129 229 V16.3.0 (2024-10).
+
+    The Primary-Event-Charging-Function-Name AVP (AVP Code 619) is of type DiameterURI.
+    """
+    code = PRIMARY_EVENT_CHARGING_FUNCTION_NAME_AVP_CODE
+    vendor_id = VENDOR_ID_3GPP
+
+    def __init__(self, data):
+        DiameterAVP.__init__(self, 
+                             PrimaryEventChargingFunctionNameAVP.code,
+                             PrimaryEventChargingFunctionNameAVP.vendor_id)
+        DiameterAVP.set_vendor_id_bit(self, True)
+        DiameterURI.__init__(self, data=data, vendor_id=VENDOR_ID_3GPP)
+
+
+class SecondaryEventChargingFunctionNameAVP(DiameterAVP, DiameterURI):
+    """Implementation of Secondary-Event-Charging-Function-Name AVP in Section 6.3.21
+    of ETSI TS 129 229 V16.3.0 (2024-10).
+
+    The Secondary-Event-Charging-Function-Name AVP (AVP Code 620) is of type DiameterURI.
+    """
+    code = SECONDARY_EVENT_CHARGING_FUNCTION_NAME_AVP_CODE
+    vendor_id = VENDOR_ID_3GPP
+
+    def __init__(self, data):
+        DiameterAVP.__init__(self, 
+                             SecondaryEventChargingFunctionNameAVP.code,
+                             SecondaryEventChargingFunctionNameAVP.vendor_id)
+        DiameterAVP.set_vendor_id_bit(self, True)
+        DiameterURI.__init__(self, data=data, vendor_id=VENDOR_ID_3GPP)
+
+
+class PrimaryChargingCollectionFunctionNameAVP(DiameterAVP, DiameterURI):
+    """Implementation of Primary-Charging-Collection-Function-Name AVP in Section 6.3.22
+    of ETSI TS 129 229 V16.3.0 (2024-10).
+
+    The Primary-Charging-Collection-Function-Name AVP (AVP Code 621) is of type DiameterURI.
+    """
+    code = PRIMARY_CHARGING_COLLECTION_FUNCTION_NAME_AVP_CODE
+    vendor_id = VENDOR_ID_3GPP
+
+    def __init__(self, data):
+        DiameterAVP.__init__(self, 
+                             PrimaryChargingCollectionFunctionNameAVP.code,
+                             PrimaryChargingCollectionFunctionNameAVP.vendor_id)
+        DiameterAVP.set_vendor_id_bit(self, True)
+        DiameterURI.__init__(self, data=data, vendor_id=VENDOR_ID_3GPP)
+
+
+class SecondaryChargingCollectionFunctionNameAVP(DiameterAVP, DiameterURI):
+    """Implementation of Secondary-Charging-Collection-Function-Name AVP in Section 6.3.23
+    of ETSI TS 129 229 V16.3.0 (2024-10).
+
+    The Secondary-Charging-Collection-Function-Name AVP (AVP Code 622) is of type DiameterURI.
+    """
+    code = SECONDARY_CHARGING_COLLECTION_FUNCTION_NAME_AVP_CODE
+    vendor_id = VENDOR_ID_3GPP
+
+    def __init__(self, data):
+        DiameterAVP.__init__(self, 
+                             SecondaryChargingCollectionFunctionNameAVP.code,
+                             SecondaryChargingCollectionFunctionNameAVP.vendor_id)
+        DiameterAVP.set_vendor_id_bit(self, True)
+        DiameterURI.__init__(self, data=data, vendor_id=VENDOR_ID_3GPP)
 
 
 class FeatureListIdAVP(DiameterAVP, Unsigned32Type):

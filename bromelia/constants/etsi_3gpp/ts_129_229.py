@@ -41,6 +41,10 @@ FEATURE_LIST_ID_AVP_CODE = convert_to_4_bytes(629)
 FEATURE_LIST_AVP_CODE = convert_to_4_bytes(630)
 USER_DATA_AVP_CODE = convert_to_4_bytes(702)
 CHARGING_INFORMATION_AVP_CODE = convert_to_4_bytes(618)
+PRIMARY_EVENT_CHARGING_FUNCTION_NAME_AVP_CODE = convert_to_4_bytes(619)
+SECONDARY_EVENT_CHARGING_FUNCTION_NAME_AVP_CODE = convert_to_4_bytes(620)
+PRIMARY_CHARGING_COLLECTION_FUNCTION_NAME_AVP_CODE = convert_to_4_bytes(621)
+SECONDARY_CHARGING_COLLECTION_FUNCTION_NAME_AVP_CODE = convert_to_4_bytes(622)
 
 #: List of Reason-Code AVP values.
 #: For more information, please refer to Section 6.3.17 of 
