@@ -17,3 +17,7 @@ spec:
       hostname: rbx-prd-dra.epc.mnc840.mcc310.3gppnetwork.org
       realm: epc.mnc840.mcc310.3gppnetwork.org
       port: 3870
+    accepted_realms:
+      - epc.mnc840.mcc310.3gppnetwork.org
+      - epc.mnc123.mcc732.3gppnetwork.org
+      - ims.mnc123.mcc732.3gppnetwork.org

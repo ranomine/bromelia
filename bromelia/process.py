@@ -45,7 +45,10 @@ def process_request(association, message):
     elif (DESTINATION_HOST_AVP_CODE not in list_of_avps_by_code and 
           DESTINATION_REALM_AVP_CODE in list_of_avps_by_code):
 
-        if not list(filter(lambda avp: avp.data == local_node_realm, message.avps)):
+        destination_realm = list(filter(lambda avp: avp.code == DESTINATION_REALM_AVP_CODE, message.avps))[0].data
+        accepted_realms = getattr(connection, 'accepted_realms', [local_node_realm.decode('utf-8')])
+        
+        if destination_realm.decode('utf-8') not in accepted_realms:
             logging.debug(f"[{message.header.hop_by_hop.hex()}] Diameter "\
                           f"Request does not include Destination-Host AVP, "\
                           f"but it does include an invalid Destination-Realm "\

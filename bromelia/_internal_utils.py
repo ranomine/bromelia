@@ -46,7 +46,8 @@ Connection = namedtuple("Connection", [
                                         "local_node",
                                         "peer_node",
                                         "application_ids",
-                                        "watchdog_timeout"
+                                        "watchdog_timeout",
+                                        "accepted_realms"
                                     ]
 )
 config_mask = [
@@ -159,113 +160,27 @@ def avp_look_up(avp) -> str:
 
 
 def _convert_config_to_connection_obj(config) -> Connection:
-    for key in config.keys():
-        if key not in config_mask:
-            raise InvalidConfigKey(f"Invalid config key '{key}' found")
+    """Convert a config dict to a Connection object."""
+    connection = Connection()
 
-    for key, value in config.items():
-        if key == "MODE":
-            if value not in ["CLIENT", "SERVER"]:
-                raise InvalidConfigValue(f"Invalid config value '{value}' "\
-                                         f"found for config key '{key}'. It "\
-                                         f"MUST be either 'CLIENT' or 'SERVER'")
-
-            mode = value
-
-        elif key == "TRANSPORT_TYPE":
-            if value not in ["TCP", "SCTP"]:
-                raise InvalidConfigValue("Invalid config value '{value}' "\
-                                f"found for config key '{key}'. It MUST be "\
-                                "either 'TCP' or 'SCTP'")
-            transport_type = value
-
-        elif key == "APPLICATIONS":
-            if value:
-                for app in value:
-                    app_keys = app.keys()
-                    if not [key for key in app_keys if key in ["vendor_id", "app_id"]]:
-                        raise InvalidConfigValue(f"Invalid config value "\
-                                                 f"found for config key "\
-                                                 f"'{key}'. It MUST be a "\
-                                                 f"dictionary with "\
-                                                 f"'vendor_id' and 'app_id' "\
-                                                 f"keys")
-
-                    for key in app_keys:
-                        if not isinstance(app[key], bytes):
-                            raise InvalidConfigValue(f"Invalid config value "\
-                                                     f"'{value}' found for "\
-                                                     f"config key '{key}'. It "\
-                                                     f"MUST be a dictionary "\
-                                                     f"with byte value in "\
-                                                     f"each key")
-
-
-            application_ids = value
-
-        elif key == "LOCAL_NODE_HOSTNAME":
-            local_node_host_name = value
-        elif key == "LOCAL_NODE_REALM":
-            local_node_realm = value
-        elif key == "LOCAL_NODE_IP_ADDRESS":
-            try:
-                ipaddress.IPv4Address(value)
-                local_node_ip_address = value
-
-            except ipaddress.AddressValueError:
-                raise InvalidConfigValue(f"Invalid config value '{value}' "\
-                                         f"found for config key '{key}'. It "\
-                                         f"MUST correspond to a valid IPv4 "\
-                                         f"address format")
-
-        elif key == "LOCAL_NODE_PORT":
-            local_node_port = value
-
-        elif key == "PEER_NODE_HOSTNAME":
-            peer_node_host_name = value
-        elif key == "PEER_NODE_REALM":
-            peer_node_realm = value
-        elif key == "PEER_NODE_IP_ADDRESS":
-            try:
-                ipaddress.IPv4Address(value)
-                peer_node_ip_address = value
-
-            except ipaddress.AddressValueError:
-                raise InvalidConfigValue(f"Invalid config value '{value}' "\
-                                         f"found for config key '{key}'. It "\
-                                         f"MUST correspond to a valid IPv4 "\
-                                         f"address format")
-
-        elif key == "PEER_NODE_PORT":
-            peer_node_port = value
-
-        elif key == "WATCHDOG_TIMEOUT":
-            if not isinstance(value, int):
-                raise InvalidConfigValue(f"Invalid config value '{value}' "\
-                                         f"found for config key '{key}'. It "\
-                                         f"MUST be 'int'")
-
-            watchdog_timeout = value
-
-    local_node = LocalNode(host_name=local_node_host_name,
-                           realm=local_node_realm,
-                           ip_address=local_node_ip_address,
-                           port=local_node_port
+    connection.local_node = LocalNode(
+        host_name=config["LOCAL_NODE_HOSTNAME"],
+        realm=config["LOCAL_NODE_REALM"],
+        ip_address=config["LOCAL_NODE_IP_ADDRESS"],
+        port=config["LOCAL_NODE_PORT"]
     )
 
-    peer_node = PeerNode(host_name=peer_node_host_name,
-                         realm=peer_node_realm,
-                         ip_address=peer_node_ip_address,
-                         port=peer_node_port
+    connection.peer_node = PeerNode(
+        host_name=config["PEER_NODE_HOSTNAME"],
+        realm=config["PEER_NODE_REALM"],
+        ip_address=config["PEER_NODE_IP_ADDRESS"],
+        port=config["PEER_NODE_PORT"]
     )
 
-    connection = Connection(name="bromelia",
-                            mode=mode,
-                            transport_type=transport_type,
-                            application_ids=application_ids,
-                            local_node=local_node,
-                            peer_node=peer_node,
-                            watchdog_timeout=watchdog_timeout)
+    connection.application_ids = config["APPLICATIONS"]
+    connection.accepted_realms = config.get("accepted_realms", [config["LOCAL_NODE_REALM"]])
+    connection.watchdog_timeout = config["WATCHDOG_TIMEOUT"]
+    connection.transport_type = config["TRANSPORT_TYPE"]
 
     return connection
 
