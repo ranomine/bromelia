@@ -91,6 +91,31 @@ REASON_CODE_NEW_SERVER_ASSIGNED = convert_to_4_bytes(1)
 REASON_CODE_SERVER_CHANGE = convert_to_4_bytes(2)
 REASON_CODE_REMOVE_CHANGE = convert_to_4_bytes(3)
 
+#: List of User-Authorization-Type AVP values.
+#: For more information, please refer to Section 6.3.24 of 
+#: ETSI TS 129 229 V16.3.0 (2024-10).
+USER_AUTHORIZATION_TYPE_REGISTRATION = convert_to_4_bytes(0)
+USER_AUTHORIZATION_TYPE_DE_REGISTRATION = convert_to_4_bytes(1)
+USER_AUTHORIZATION_TYPE_REGISTRATION_AND_CAPABILITIES = convert_to_4_bytes(2)
+
+#: List of User-Data-Already-Available AVP values.
+#: For more information, please refer to Section 6.3.26 of 
+#: ETSI TS 129 229 V16.3.0 (2024-10).
+USER_DATA_ALREADY_AVAILABLE_USER_DATA_NOT_AVAILABLE = convert_to_4_bytes(0)
+USER_DATA_ALREADY_AVAILABLE_USER_DATA_AVAILABLE = convert_to_4_bytes(1)
+
+#: List of Loose-Route-Indication AVP values.
+#: For more information, please refer to Section 6.3.45 of 
+#: ETSI TS 129 229 V16.3.0 (2024-10).
+LOOSE_ROUTE_INDICATION_LOOSE_ROUTE_NOT_REQUIRED = convert_to_4_bytes(0)
+LOOSE_ROUTE_INDICATION_LOOSE_ROUTE_REQUIRED = convert_to_4_bytes(1)
+
+#: List of Multiple-Registration-Indication AVP values.
+#: For more information, please refer to Section 6.3.51 of 
+#: ETSI TS 129 229 V16.3.0 (2024-10).
+MULTIPLE_REGISTRATION_INDICATION_NOT_MULTIPLE_REGISTRATION= convert_to_4_bytes(0)
+MULTIPLE_REGISTRATION_INDICATION_MULTIPLE_REGISTRATION= convert_to_4_bytes(1)
+
 #: List of Feature-List-ID AVP values.
 #: For more information, please refer to Section 6.3.30 of 
 #: ETSI TS 129 229 V14.3.0 (2019-10).

@@ -335,3 +335,39 @@ class DeregistrationReasonAVP(DiameterAVP, GroupedType):
         DiameterAVP.set_mandatory_bit(self, True)
         DiameterAVP.set_vendor_id_bit(self, True)
         GroupedType.__init__(self, data=data, vendor_id=VENDOR_ID_3GPP)
+
+
+class PublicIdentityAVP(DiameterAVP, UTF8StringType):
+    """Implementation of Public-Identity AVP in Section 6.3.2 
+    of ETSI TS 129 229 V16.3.0 (2024-10).
+
+    The Public-Identity AVP (AVP Code 601) is of type UTF8String.
+    """
+    code = PUBLIC_IDENTITY_AVP_CODE
+    vendor_id = VENDOR_ID_3GPP
+
+    def __init__(self, data):
+        DiameterAVP.__init__(self, 
+                             PublicIdentityAVP.code,
+                             PublicIdentityAVP.vendor_id)
+        DiameterAVP.set_mandatory_bit(self, True)
+        DiameterAVP.set_vendor_id_bit(self, True)
+        UTF8StringType.__init__(self, data=data, vendor_id=VENDOR_ID_3GPP)
+
+
+class ServerNameAVP(DiameterAVP, UTF8StringType):
+    """Implementation of Server-Name AVP in Section 6.3.3 
+    of ETSI TS 129 229 V16.3.0 (2024-10).
+
+    The Server-Name AVP (AVP Code 602) is of type UTF8String.
+    """
+    code = SERVER_NAME_AVP_CODE
+    vendor_id = VENDOR_ID_3GPP
+
+    def __init__(self, data):
+        DiameterAVP.__init__(self, 
+                             ServerNameAVP.code,
+                             ServerNameAVP.vendor_id)
+        DiameterAVP.set_mandatory_bit(self, True)
+        DiameterAVP.set_vendor_id_bit(self, True)
+        UTF8StringType.__init__(self, data=data, vendor_id=VENDOR_ID_3GPP)
