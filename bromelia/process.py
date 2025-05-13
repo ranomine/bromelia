@@ -29,6 +29,7 @@ def process_request(association, message):
 
     local_node_host_name = connection.local_node.host_name.encode("utf-8")
     local_node_realm = connection.local_node.realm.encode("utf-8")
+    local_proxied_realm_pattern = connection.local_node.proxied_realm.encode("utf-8")
 
     if DESTINATION_HOST_AVP_CODE in list_of_avps_by_code:
         if not list(filter(lambda avp: avp.data == local_node_host_name, message.avps)):
@@ -46,13 +47,11 @@ def process_request(association, message):
     elif (DESTINATION_HOST_AVP_CODE not in list_of_avps_by_code and 
           DESTINATION_REALM_AVP_CODE in list_of_avps_by_code):
 
-        # Get the proxied_realm pattern from config if it exists
-        proxied_realm_pattern = connection.local_node.config.get("proxied_realm")
-        
+                
         if proxied_realm_pattern:
             # Check if the Destination-Realm matches the pattern
             destination_realm = next(avp.data for avp in message.avps if avp.code == DESTINATION_REALM_AVP_CODE)
-            if not re.match(proxied_realm_pattern, destination_realm.decode("utf-8")):
+            if not re.match(local_proxied_realm_pattern, destination_realm.decode("utf-8")):
                 logging.debug(f"[{message.header.hop_by_hop.hex()}] Diameter "\
                               f"Request does not include Destination-Host AVP, "\
                               f"and its Destination-Realm AVP does not match "\
