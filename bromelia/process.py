@@ -11,6 +11,7 @@
     :license: MIT, see LICENSE for more details.
 """
 import logging
+import re
 
 from .avps import AuthRequestTypeAVP
 from .constants import *
@@ -45,19 +46,32 @@ def process_request(association, message):
     elif (DESTINATION_HOST_AVP_CODE not in list_of_avps_by_code and 
           DESTINATION_REALM_AVP_CODE in list_of_avps_by_code):
 
-        if not list(filter(lambda avp: avp.data == local_node_realm, message.avps)):
-            logging.debug(f"[{message.header.hop_by_hop.hex()}] Diameter "\
-                          f"Request does not include Destination-Host AVP, "\
-                          f"but it does include an invalid Destination-Realm "\
-                          f"AVP which was addressed to another realm.")
-
-            raise ProcessRequestException("Request does not comply with "\
-                                          "local consumption rules.")
+        # Get the proxied_realm pattern from config if it exists
+        proxied_realm_pattern = connection.local_node.config.get("proxied_realm")
+        
+        if proxied_realm_pattern:
+            # Check if the Destination-Realm matches the pattern
+            destination_realm = next(avp.data for avp in message.avps if avp.code == DESTINATION_REALM_AVP_CODE)
+            if not re.match(proxied_realm_pattern, destination_realm.decode("utf-8")):
+                logging.debug(f"[{message.header.hop_by_hop.hex()}] Diameter "\
+                              f"Request does not include Destination-Host AVP, "\
+                              f"and its Destination-Realm AVP does not match "\
+                              f"the proxied_realm pattern.")
+                raise ProcessRequestException("Request does not comply with "\
+                                              "local consumption rules.")
+        else:
+            # Original behavior - exact match with local realm
+            if not list(filter(lambda avp: avp.data == local_node_realm, message.avps)):
+                logging.debug(f"[{message.header.hop_by_hop.hex()}] Diameter "\
+                              f"Request does not include Destination-Host AVP, "\
+                              f"but it does include an invalid Destination-Realm "\
+                              f"AVP which was addressed to another realm.")
+                raise ProcessRequestException("Request does not comply with "\
+                                              "local consumption rules.")
 
         logging.debug(f"[{message.header.hop_by_hop.hex()}] Diameter Request "\
                       f"does not include Destination-Host AVP, but it does "\
-                      f"include a valid Destination-Realm AVP which contains "\
-                      f"realm of local node.")
+                      f"include a valid Destination-Realm AVP.")
         
     elif (DESTINATION_HOST_AVP_CODE not in list_of_avps_by_code and 
           DESTINATION_REALM_AVP_CODE not in list_of_avps_by_code):
