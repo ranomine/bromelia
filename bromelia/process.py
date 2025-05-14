@@ -29,7 +29,7 @@ def process_request(association, message):
 
     local_node_host_name = connection.local_node.host_name.encode("utf-8")
     local_node_realm = connection.local_node.realm.encode("utf-8")
-    local_proxied_realm_pattern = connection.local_node.proxied_realm.encode("utf-8")
+    proxied_realms_patterns = connection.local_node.config.get("PROXY_REALMS")
 
     if DESTINATION_HOST_AVP_CODE in list_of_avps_by_code:
         if not list(filter(lambda avp: avp.data == local_node_host_name, message.avps)):
@@ -47,26 +47,40 @@ def process_request(association, message):
     elif (DESTINATION_HOST_AVP_CODE not in list_of_avps_by_code and 
           DESTINATION_REALM_AVP_CODE in list_of_avps_by_code):
 
-                
-        if proxied_realm_pattern:
-            # Check if the Destination-Realm matches the pattern
-            destination_realm = next(avp.data for avp in message.avps if avp.code == DESTINATION_REALM_AVP_CODE)
-            if not re.match(local_proxied_realm_pattern, destination_realm.decode("utf-8")):
-                logging.debug(f"[{message.header.hop_by_hop.hex()}] Diameter "\
-                              f"Request does not include Destination-Host AVP, "\
-                              f"and its Destination-Realm AVP does not match "\
-                              f"the proxied_realm pattern.")
-                raise ProcessRequestException("Request does not comply with "\
-                                              "local consumption rules.")
-        else:
-            # Original behavior - exact match with local realm
-            if not list(filter(lambda avp: avp.data == local_node_realm, message.avps)):
-                logging.debug(f"[{message.header.hop_by_hop.hex()}] Diameter "\
-                              f"Request does not include Destination-Host AVP, "\
-                              f"but it does include an invalid Destination-Realm "\
-                              f"AVP which was addressed to another realm.")
-                raise ProcessRequestException("Request does not comply with "\
-                                              "local consumption rules.")
+        destination_realm_avp = next((avp for avp in message.avps if avp.code == DESTINATION_REALM_AVP_CODE), None)
+        if not destination_realm_avp:
+            logging.error(f"[{message.header.hop_by_hop.hex()}] Destination-Realm AVP code found but AVP itself is missing.")
+            raise ProcessRequestException("Internal error: Destination-Realm AVP missing.")
+
+        destination_realm = destination_realm_avp.data.decode("utf-8")
+        realm_is_valid_for_proxy = False
+
+        if proxied_realms_patterns and isinstance(proxied_realms_patterns, list):
+            for pattern_str in proxied_realms_patterns:
+                try:
+                    if re.match(pattern_str, destination_realm):
+                        realm_is_valid_for_proxy = True
+                        logging.debug(f"[{message.header.hop_by_hop.hex()}] Destination-Realm '{destination_realm}' matched PROXY_REALMS pattern '{pattern_str}'.")
+                        break 
+                except re.error as e:
+                    logging.error(f"[{message.header.hop_by_hop.hex()}] Invalid regex pattern '{pattern_str}' in PROXY_REALMS: {e}")
+            
+            if not realm_is_valid_for_proxy:
+                logging.debug(f"[{message.header.hop_by_hop.hex()}] Diameter Request's Destination-Realm '{destination_realm}' "
+                              f"did not match any PROXY_REALMS patterns.")
+                raise ProcessRequestException("Request's Destination-Realm does not match any configured PROXY_REALMS patterns.")
+
+        if not realm_is_valid_for_proxy:
+            if destination_realm.encode("utf-8") != local_node_realm:
+                logging.debug(f"[{message.header.hop_by_hop.hex()}] Diameter "
+                              f"Request does not include Destination-Host AVP, "
+                              f"and its Destination-Realm AVP ('{destination_realm}') was not in PROXY_REALMS "
+                              f"and does not match local realm ('{local_node_realm.decode('utf-8')}').")
+                raise ProcessRequestException("Request does not comply with "
+                                              "local consumption or proxy rules.")
+            else:
+                 logging.debug(f"[{message.header.hop_by_hop.hex()}] Diameter Request "
+                               f"is for local consumption (Destination-Realm matches local realm).")
 
         logging.debug(f"[{message.header.hop_by_hop.hex()}] Diameter Request "\
                       f"does not include Destination-Host AVP, but it does "\

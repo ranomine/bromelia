@@ -340,6 +340,7 @@ class Diameter:
     default_config = {
             "MODE": "CLIENT",
             "APPLICATIONS": [],
+            "PROXY_REALMS": None,
             "TRANSPORT_TYPE": "TCP",
             "LOCAL_NODE_HOSTNAME": platform.node(),
             "LOCAL_NODE_REALM": socket.getfqdn(),

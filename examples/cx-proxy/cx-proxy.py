@@ -14,6 +14,12 @@
 import os
 import sys
 import uuid
+import logging
+
+logging.basicConfig(
+    level=logging.DEBUG,
+    format="[%(asctime)s] [%(levelname)s] [%(name)s] %(message)s"
+)
 
 basedir = os.path.dirname(os.path.abspath(__file__))
 examples_dir = os.path.dirname(basedir)
