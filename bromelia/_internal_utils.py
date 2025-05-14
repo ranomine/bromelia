@@ -46,6 +46,7 @@ Connection = namedtuple("Connection", [
                                         "local_node",
                                         "peer_node",
                                         "application_ids",
+                                        "proxy_realms"
                                         "watchdog_timeout"
                                     ]
 )
@@ -204,6 +205,16 @@ def _convert_config_to_connection_obj(config) -> Connection:
 
             application_ids = value
 
+        elif key == "PROXY_REALMS":
+            if value:
+                for realm in value:
+                    if not isinstance(realm, str):
+                        raise InvalidConfigValue(f"Invalid config value "\
+                                                 f"'{value}' found for "\
+                                                 f"config key '{key}'. It "\
+                                                 f"MUST be a list of strings")
+                    proxy_realms.append(realm)
+                    
         elif key == "LOCAL_NODE_HOSTNAME":
             local_node_host_name = value
         elif key == "LOCAL_NODE_REALM":

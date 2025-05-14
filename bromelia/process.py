@@ -29,7 +29,7 @@ def process_request(association, message):
 
     local_node_host_name = connection.local_node.host_name.encode("utf-8")
     local_node_realm = connection.local_node.realm.encode("utf-8")
-    proxied_realms_patterns = connection.config.get("PROXY_REALMS")
+    proxied_realms_patterns = connection.proxy_realms
 
     if DESTINATION_HOST_AVP_CODE in list_of_avps_by_code:
         if not list(filter(lambda avp: avp.data == local_node_host_name, message.avps)):
