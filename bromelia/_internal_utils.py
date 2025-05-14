@@ -46,7 +46,7 @@ Connection = namedtuple("Connection", [
                                         "local_node",
                                         "peer_node",
                                         "application_ids",
-                                        "proxy_realms"
+                                        "proxy_realms",
                                         "watchdog_timeout"
                                     ]
 )
@@ -214,7 +214,7 @@ def _convert_config_to_connection_obj(config) -> Connection:
                                                  f"config key '{key}'. It "\
                                                  f"MUST be a list of strings")
                     proxy_realms.append(realm)
-                    
+
         elif key == "LOCAL_NODE_HOSTNAME":
             local_node_host_name = value
         elif key == "LOCAL_NODE_REALM":
