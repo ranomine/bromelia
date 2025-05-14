@@ -31,7 +31,7 @@ sys.path.insert(0, bromelia_dir)
 from bromelia import Bromelia
 from bromelia.avps.ietf.rfc6733 import DestinationRealmAVP, ProxyInfoAVP, ProxyHostAVP, ProxyStateAVP
 from bromelia.constants.app_ids import DIAMETER_APPLICATION_Cx
-from bromelia.lib.etsi_3gpp_cx import UAA
+from bromelia.lib.etsi_3gpp_cx import UAA, UAR
 
 def handle_request(request):
     print(f"Received request with Hop-by-Hop ID: {request.header.hop_by_hop_identifier}")
@@ -60,6 +60,8 @@ def handle_request(request):
 def main():
     # Initialize Bromelia
     app = Bromelia(config_file="./config/diameter.conf")
+    app.load_messages_into_application_id([UAA, UAR], DIAMETER_APPLICATION_Cx)
+
 
     # Register the request handler
     app.route(DIAMETER_APPLICATION_Cx, handle_request)
