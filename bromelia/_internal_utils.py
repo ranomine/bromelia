@@ -278,6 +278,7 @@ def _convert_config_to_connection_obj(config) -> Connection:
                             application_ids=application_ids,
                             local_node=local_node,
                             peer_node=peer_node,
+                            proxy_realms=proxy_realms,
                             watchdog_timeout=watchdog_timeout)
 
     return connection
