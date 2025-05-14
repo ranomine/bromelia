@@ -207,6 +207,7 @@ def _convert_config_to_connection_obj(config) -> Connection:
 
         elif key == "PROXY_REALMS":
             if value:
+                proxy_realms = []
                 for realm in value:
                     if not isinstance(realm, str):
                         raise InvalidConfigValue(f"Invalid config value "\
