@@ -445,7 +445,6 @@ class MultimediaAuthAnswer(DiameterAnswer):
                     "auth_session_state": AuthSessionStateAVP,
                     "origin_host": OriginHostAVP,
                     "origin_realm": OriginRealmAVP,
-                    "destination_realm": DestinationRealmAVP,
     }
 
     optionals = { 
@@ -459,6 +458,7 @@ class MultimediaAuthAnswer(DiameterAnswer):
                     "supported_features": SupportedFeaturesAVP,
                     "public_identity": PublicIdentityAVP,
                     "sip_number_auth_items": SIPNumberAuthItemsAVP,
+                    "sip_auth_data_item": SIPAuthDataItemAVP,
                     "failed_avp": FailedAvpAVP,
                     "proxy_info": ProxyInfoAVP,
                     "route_record": RouteRecordAVP,
