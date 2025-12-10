@@ -1,0 +1,32 @@
+{
+  "profiles": [
+    {
+      "allowEmptyResultForGtpHubInfo": false,
+      "apnRulesetName": "default",
+      "breakoutZoneName": "default",
+      "customer": null,
+      "detectHlrWrongMsisdn": true,
+      "forceSponsorId": null,
+      "ggsnConfigs": null,
+      "hlrNumber": null,
+      "hssHost": "",
+      "hssRealm": "hss-summa-1.epc.mnc840.mcc310.3gppnetwork.org",
+      "imsRealm": "ims.mnc300.mcc312.3gppnetwork.org",
+      "mgtDigitsToReplace": 6,
+      "mgtPrefix": "805010",
+      "pgwRulesetName": "default",
+      "preventCamelContinue": false,
+      "preventMsisdnTranslation": false,
+      "profileName": "KnowRoamingHSS",
+      "scfNumber": null,
+      "skipRhPrefix": false,
+      "skipRhSuffix": false,
+      "smscNumber": "14174000086",
+      "unmapForGtpHubInfo": false,
+      "unodeRulesetName": "default",
+      "useMgtRouting": true,
+      "userSupplied": null,
+      "ussdDcsRewrite": null
+    }
+  ]
+}

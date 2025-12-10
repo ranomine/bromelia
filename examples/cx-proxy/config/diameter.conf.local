@@ -1,0 +1,27 @@
+api_version: v1
+name: CX_PROXY
+spec:
+  - applications:
+      - vendor_id: VENDOR_ID_3GPP
+        app_id: DIAMETER_APPLICATION_Cx_Dx
+    mode: Client
+    watchdog_timeout: 30
+    transport_type: TCP
+    proxy_realms:
+      - ^epc\.mnc123\.mcc732\.3gppnetwork\.org$
+      - ^epc\.mnc840\.mcc310\.3gppnetwork\.org$
+    local:
+      ip_address: 10.26.61.69
+      hostname: rochtest.epc.mnc840.mcc310.3gppnetwork.org
+      realm: epc.mnc840.mcc310.3gppnetwork.org
+      proxied_realm: ^.*\.3gppnetwork\.org$
+      port: 3868
+    peer:
+      ip_address: 199.255.7.206
+      hostname: rbx-prd-dra.epc.mnc840.mcc310.3gppnetwork.org
+      realm: epc.mnc840.mcc310.3gppnetwork.org
+      port: 3870
+    # Configuration for error responses (DIAMETER_ERROR_USER_UNKNOWN, etc.)
+    error_response:
+      origin_host: cx-proxy.epc.mnc840.mcc310.3gppnetwork.org
+      origin_realm: epc.mnc840.mcc310.3gppnetwork.org

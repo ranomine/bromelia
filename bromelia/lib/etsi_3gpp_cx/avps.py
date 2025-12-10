@@ -46,6 +46,7 @@ from ...avps.etsi_3gpp.ts_129_229 import SARFlagsAVP
 from ...avps.etsi_3gpp.ts_129_229 import SessionPriorityAVP
 from ...avps.etsi_3gpp.ts_129_229 import SIPNumberAuthItemsAVP
 from ...avps.etsi_3gpp.ts_129_229 import SIPAuthDataItemAVP
+from ...avps.etsi_3gpp.ts_129_229 import LIAFlagsAVP
 from ...avps.etsi_3gpp.ts_129_229 import RTRFlagsAVP
 from ...avps.etsi_3gpp.ts_129_229 import DeregistrationReasonAVP
 from ...avps.etsi_3gpp.ts_129_229 import IdentityWithEmergencyRegistrationAVP

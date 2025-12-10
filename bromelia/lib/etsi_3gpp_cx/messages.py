@@ -284,14 +284,12 @@ class ServerAssignmentRequest(DiameterRequest):
                  destination_realm=None,
                  user_name=None,
                  supported_features=None,
-                 cancellation_type=CANCELLATION_TYPE_SUBSCRIPTION_WITHDRAWAL,
-                 clr_flags=None,
                  proxy_info=None,
                  route_record=None,
                  **kwargs):
 
         DiameterRequest.__init__(self, 
-                                 command_code=CANCEL_LOCATION_MESSAGE, 
+                                 command_code=SERVER_ASSIGNMENT_MESSAGE, 
                                  application_id=DIAMETER_APPLICATION_Cx_Dx)
 
         DiameterRequest._load(self, locals())
@@ -318,18 +316,18 @@ class LocationInfoAnswer(DiameterAnswer):
                     "auth_session_state": AuthSessionStateAVP,
                     "origin_host": OriginHostAVP,
                     "origin_realm": OriginRealmAVP,
-                    "destination_realm": DestinationRealmAVP,
-                    "public_identity": PublicIdentityAVP,
     }
 
     optionals = { 
                     # "drmp": DrmpAVP,
-                    "destination_host": DestinationHostAVP,
-                    "originating_request": OriginatingRequestAVP,
+                    "result_code": ResultCodeAVP,
+                    "experimental_result": ExperimentalResultAVP,
                     # "oc_supported_features": OcSupportedFeaturesAVP,
                     "supported_features": SupportedFeaturesAVP,
-                    "user_authorization_type": UserAuthorizationTypeAVP,
-                    "session_priority": SessionPriorityAVP,
+                    "server_name": ServerNameAVP,
+                    "server_capabilities": ServerCapabilitiesAVP,
+                    "wildcarded_public_identity": WildcardedPublicIdentityAVP,
+                    "lia_flags": LIAFlagsAVP,
                     "proxy_info": ProxyInfoAVP,
                     "route_record": RouteRecordAVP,
     }

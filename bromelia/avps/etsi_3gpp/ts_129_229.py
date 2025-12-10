@@ -571,6 +571,24 @@ class RTRFlagsAVP(DiameterAVP, Unsigned32Type):
         Unsigned32Type.__init__(self, data=data, vendor_id=VENDOR_ID_3GPP)
         
         
+class LIAFlagsAVP(DiameterAVP, Unsigned32Type):
+    """Implementation of LIA-Flags AVP in Section 6.3.69 
+    of ETSI TS 129 229 V16.3.0 (2024-10).
+
+    The LIA-Flags AVP (AVP Code 653) is of type Unsigned32.
+    """
+
+    code = LIA_FLAGS_AVP_CODE
+    vendor_id = VENDOR_ID_3GPP
+
+    def __init__(self, data):
+        DiameterAVP.__init__(self, 
+                             LIAFlagsAVP.code,
+                             LIAFlagsAVP.vendor_id)
+        DiameterAVP.set_vendor_id_bit(self, True)
+        Unsigned32Type.__init__(self, data=data, vendor_id=VENDOR_ID_3GPP)
+        
+        
 class MandatoryCapabilityAVP(DiameterAVP, Unsigned32Type):
     """Implementation of Mandatory-Capability AVP in Section 6.3.5 
     of ETSI TS 129 229 V16.3.0 (2024-10).

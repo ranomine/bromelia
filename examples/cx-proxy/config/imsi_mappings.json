@@ -1,0 +1,224 @@
+{
+  "mappings": [
+    {
+      "sponsoredImsi": "732123201256920",
+      "sponsoredMsisdn": "573150001156920",
+      "customerImsi": "312300003093927",
+      "customerMsisdn": "879000003093927",
+      "customerProfileName": "KnowRoamingHSS",
+      "sponsorName": "IMSI21",
+      "sponsorId": "21",
+      "userSupplied": null,
+      "imsiBarred": false
+    },
+    {
+      "sponsoredImsi": "732123201256921",
+      "sponsoredMsisdn": "573150001156921",
+      "customerImsi": "312300003093928",
+      "customerMsisdn": "879000003093928",
+      "customerProfileName": "KnowRoamingHSS",
+      "sponsorName": "IMSI21",
+      "sponsorId": "21",
+      "userSupplied": null,
+      "imsiBarred": false
+    },
+    {
+      "sponsoredImsi": "732123201256922",
+      "sponsoredMsisdn": "573150001156922",
+      "customerImsi": "312300003093929",
+      "customerMsisdn": "879000003093929",
+      "customerProfileName": "KnowRoamingHSS",
+      "sponsorName": "IMSI21",
+      "sponsorId": "21",
+      "userSupplied": null,
+      "imsiBarred": false
+    },
+    {
+      "sponsoredImsi": "732123201256923",
+      "sponsoredMsisdn": "573150001156923",
+      "customerImsi": "312300003093930",
+      "customerMsisdn": "879000003093930",
+      "customerProfileName": "KnowRoamingHSS",
+      "sponsorName": "IMSI21",
+      "sponsorId": "21",
+      "userSupplied": null,
+      "imsiBarred": false
+    },
+    {
+      "sponsoredImsi": "732123201256924",
+      "sponsoredMsisdn": "573150001156924",
+      "customerImsi": "312300003093931",
+      "customerMsisdn": "879000003093931",
+      "customerProfileName": "KnowRoamingHSS",
+      "sponsorName": "IMSI21",
+      "sponsorId": "21",
+      "userSupplied": null,
+      "imsiBarred": false
+    },
+    {
+      "sponsoredImsi": "732123201256925",
+      "sponsoredMsisdn": "573150001156925",
+      "customerImsi": "312300003093932",
+      "customerMsisdn": "879000003093932",
+      "customerProfileName": "KnowRoamingHSS",
+      "sponsorName": "IMSI21",
+      "sponsorId": "21",
+      "userSupplied": null,
+      "imsiBarred": false
+    },
+    {
+      "sponsoredImsi": "732123201256926",
+      "sponsoredMsisdn": "573150001156926",
+      "customerImsi": "312300003093933",
+      "customerMsisdn": "879000003093933",
+      "customerProfileName": "KnowRoamingHSS",
+      "sponsorName": "IMSI21",
+      "sponsorId": "21",
+      "userSupplied": null,
+      "imsiBarred": false
+    },
+    {
+      "sponsoredImsi": "732123201256927",
+      "sponsoredMsisdn": "573150001156927",
+      "customerImsi": "312300003093934",
+      "customerMsisdn": "879000003093934",
+      "customerProfileName": "KnowRoamingHSS",
+      "sponsorName": "IMSI21",
+      "sponsorId": "21",
+      "userSupplied": null,
+      "imsiBarred": false
+    },
+    {
+      "sponsoredImsi": "732123201256928",
+      "sponsoredMsisdn": "573150001156928",
+      "customerImsi": "312300003093935",
+      "customerMsisdn": "879000003093935",
+      "customerProfileName": "KnowRoamingHSS",
+      "sponsorName": "IMSI21",
+      "sponsorId": "21",
+      "userSupplied": null,
+      "imsiBarred": false
+    },
+    {
+      "sponsoredImsi": "732123201256929",
+      "sponsoredMsisdn": "573150001156929",
+      "customerImsi": "312300003093936",
+      "customerMsisdn": "879000003093936",
+      "customerProfileName": "KnowRoamingHSS",
+      "sponsorName": "IMSI21",
+      "sponsorId": "21",
+      "userSupplied": null,
+      "imsiBarred": false
+    },
+    {
+      "sponsoredImsi": "732123201256930",
+      "sponsoredMsisdn": "573150001156930",
+      "customerImsi": "312300003093937",
+      "customerMsisdn": "879000003093937",
+      "customerProfileName": "KnowRoamingHSS",
+      "sponsorName": "IMSI21",
+      "sponsorId": "21",
+      "userSupplied": null,
+      "imsiBarred": false
+    },
+    {
+      "sponsoredImsi": "732123201256931",
+      "sponsoredMsisdn": "573150001156931",
+      "customerImsi": "312300003093938",
+      "customerMsisdn": "879000003093938",
+      "customerProfileName": "KnowRoamingHSS",
+      "sponsorName": "IMSI21",
+      "sponsorId": "21",
+      "userSupplied": null,
+      "imsiBarred": false
+    },
+    {
+      "sponsoredImsi": "732123201256932",
+      "sponsoredMsisdn": "573150001156932",
+      "customerImsi": "312300003093939",
+      "customerMsisdn": "879000003093939",
+      "customerProfileName": "KnowRoamingHSS",
+      "sponsorName": "IMSI21",
+      "sponsorId": "21",
+      "userSupplied": null,
+      "imsiBarred": false
+    },
+    {
+      "sponsoredImsi": "732123201256933",
+      "sponsoredMsisdn": "573150001156933",
+      "customerImsi": "312300003093940",
+      "customerMsisdn": "879000003093940",
+      "customerProfileName": "KnowRoamingHSS",
+      "sponsorName": "IMSI21",
+      "sponsorId": "21",
+      "userSupplied": null,
+      "imsiBarred": false
+    },
+    {
+      "sponsoredImsi": "732123201256934",
+      "sponsoredMsisdn": "573150001156934",
+      "customerImsi": "312300003093941",
+      "customerMsisdn": "879000003093941",
+      "customerProfileName": "KnowRoamingHSS",
+      "sponsorName": "IMSI21",
+      "sponsorId": "21",
+      "userSupplied": null,
+      "imsiBarred": false
+    },
+    {
+      "sponsoredImsi": "732123201256935",
+      "sponsoredMsisdn": "573150001156935",
+      "customerImsi": "312300003093942",
+      "customerMsisdn": "879000003093942",
+      "customerProfileName": "KnowRoamingHSS",
+      "sponsorName": "IMSI21",
+      "sponsorId": "21",
+      "userSupplied": null,
+      "imsiBarred": false
+    },
+    {
+      "sponsoredImsi": "732123201256936",
+      "sponsoredMsisdn": "573150001156936",
+      "customerImsi": "312300003093943",
+      "customerMsisdn": "879000003093943",
+      "customerProfileName": "KnowRoamingHSS",
+      "sponsorName": "IMSI21",
+      "sponsorId": "21",
+      "userSupplied": null,
+      "imsiBarred": false
+    },
+    {
+      "sponsoredImsi": "732123201256937",
+      "sponsoredMsisdn": "573150001156937",
+      "customerImsi": "312300003093944",
+      "customerMsisdn": "879000003093944",
+      "customerProfileName": "KnowRoamingHSS",
+      "sponsorName": "IMSI21",
+      "sponsorId": "21",
+      "userSupplied": null,
+      "imsiBarred": false
+    },
+    {
+      "sponsoredImsi": "732123201256938",
+      "sponsoredMsisdn": "573150001156938",
+      "customerImsi": "312300003093945",
+      "customerMsisdn": "879000003093945",
+      "customerProfileName": "KnowRoamingHSS",
+      "sponsorName": "IMSI21",
+      "sponsorId": "21",
+      "userSupplied": null,
+      "imsiBarred": false
+    },
+    {
+      "sponsoredImsi": "732123201256939",
+      "sponsoredMsisdn": "573150001156939",
+      "customerImsi": "312300003093946",
+      "customerMsisdn": "879000003093946",
+      "customerProfileName": "KnowRoamingHSS",
+      "sponsorName": "IMSI21",
+      "sponsorId": "21",
+      "userSupplied": null,
+      "imsiBarred": false
+    }
+  ]
+}

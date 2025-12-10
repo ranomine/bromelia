@@ -1,0 +1,73 @@
+# Datasource Configuration for CX Proxy
+# This file controls how IMSI mappings and customer profiles are loaded
+
+[datasource]
+# Mode options:
+#   - json: Load from local JSON files only
+#   - rest: Fetch from REST API only
+#   - hybrid: Use REST API with JSON fallback
+mode = hybrid
+
+# Enable/disable caching (applies to all modes)
+cache_enabled = true
+
+[imsi_mapping]
+# Source for IMSI mappings
+# Options: json, rest
+source = rest
+
+# JSON file path (used when source=json or as fallback in hybrid mode)
+json_file = ./config/imsi_mappings.json
+
+# REST API configuration (used when source=rest)
+rest_base_url = http://localhost:1705
+rest_endpoint = /v1/queryMapping/{sponsoredImsi}
+rest_timeout = 5.0
+rest_retry_attempts = 3
+rest_retry_delay = 1.0
+
+# Fallback behavior when REST API fails
+# Options: none, json, error
+fallback_on_rest_failure = json
+
+[customer_profile]
+# Source for customer profiles
+# Options: json, rest (Note: REST API has limited fields - see API_vs_JSON_Comparison.md)
+# Recommendation: Use 'json' since REST API is missing critical fields like imsRealm
+source = json
+
+# JSON file path
+json_file = ./config/customer_profiles.json
+
+# REST API configuration (if implemented in future)
+rest_base_url = http://localhost:1705
+rest_endpoint = /v1/queryProfile/{profileName}
+rest_timeout = 5.0
+
+# Fallback behavior
+fallback_on_rest_failure = json
+
+[cache]
+# Cache TTL (time-to-live) in seconds
+# How long cached entries remain valid before expiring
+imsi_mapping_ttl = 300
+customer_profile_ttl = 1800
+
+# Maximum cache size (number of entries)
+# 0 = unlimited, positive number = max entries (LRU eviction)
+max_cache_size = 10000
+
+# Cache cleanup interval (seconds)
+# How often to check for and remove expired entries
+cleanup_interval = 60
+
+# Enable cache statistics logging
+cache_stats_enabled = true
+cache_stats_interval = 300
+
+[logging]
+# Log datasource operations
+log_cache_hits = true
+log_cache_misses = true
+log_rest_calls = true
+log_json_loads = true
