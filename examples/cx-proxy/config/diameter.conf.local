@@ -4,6 +4,8 @@ spec:
   - applications:
       - vendor_id: VENDOR_ID_3GPP
         app_id: DIAMETER_APPLICATION_Cx_Dx
+      - vendor_id: VENDOR_ID_3GPP
+        app_id: DIAMETER_APPLICATION_Sh
     mode: Client
     watchdog_timeout: 30
     transport_type: TCP
