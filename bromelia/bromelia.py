@@ -127,10 +127,19 @@ class PendingAnswer:
         self.msg = msg
 
 
-    def wait(self):
-        self.recv_event.wait()
+    def wait(self, timeout=None):
+        """Wait for the answer with optional timeout.
+
+        Args:
+            timeout: Maximum time to wait in seconds, or None for no timeout.
+
+        Returns:
+            True if answer was received, False if timed out.
+        """
+        received = self.recv_event.wait(timeout=timeout)
         self.recv_event.clear()
         self.stop_event.set()
+        return received
 
 
     def update_msg(self, msg):
@@ -581,16 +590,26 @@ class Bromelia:
         bromelia_logger.debug(f"{logging_info} Sending answer")
 
 
-    def send_message(self, msg, recv_answer=True):
+    def send_message(self, msg, recv_answer=True, timeout=None):
+        """Send a Diameter message and optionally wait for the answer.
+
+        Args:
+            msg: The Diameter message to send.
+            recv_answer: Whether to wait for an answer (default True).
+            timeout: Maximum time to wait for answer in seconds, or None for no timeout.
+
+        Returns:
+            The answer message, or None if timed out or worker not running.
+        """
         if self.associations is None:
             return self.testing_answer
-            
+
         worker = self.get_worker_by_message(msg)
 
         logging_info = setup_logging_info(worker, msg)
         bromelia_logger.debug(f"{logging_info} Application needs to send a "\
                               f"message")
-        
+
         if not worker.is_running():
             bromelia_logger.debug(f"{logging_info} It seems the worker is "\
                                   f"not running anymore")
@@ -614,7 +633,14 @@ class Bromelia:
             worker.insert_pending_answer(p_answer)
             bromelia_logger.debug(f"{logging_info} Added Pending answer")
 
-            p_answer.wait()
+            received = p_answer.wait(timeout=timeout)
+            if not received:
+                # Timeout occurred - clean up pending answer
+                worker.remove_pending_answer(p_answer)
+                bromelia_logger.warning(f"{logging_info} Timeout waiting for answer "\
+                                       f"(timeout={timeout}s)")
+                return None
+
             bromelia_logger.debug(f"{logging_info} Notification from "\
                                   f"Pending answer")
 

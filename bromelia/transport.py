@@ -322,6 +322,7 @@ class TcpClient(TcpConnection):
             tcp_client.debug(f"[Socket-{self.sock_id}] Client-side Socket: "\
                              f"{self.sock}")
 
+            self.sock.setsockopt(socket.IPPROTO_TCP, socket.TCP_NODELAY, 1)
             self.sock.setblocking(False)
             tcp_client.debug(f"[Socket-{self.sock_id}] Setting as "\
                              f"Non-Blocking")
